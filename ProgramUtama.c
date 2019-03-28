@@ -15,13 +15,16 @@ void main () {
 		printf ("	1. Buat Proyek Baru\n");
 		printf ("	2. Muat Proyek dari Berkas\n");
 		printf ("	3. Keluar\n");
-		printf ("Masukan: "); scanf("%d", inputMenuUtama);
-		if (inputMenuUtama > 3 || inputMenuUtama < 1) {
+		printf ("Masukan: "); scanf("%d", &inputMenu);
+		if (inputMenu > 3 || inputMenu < 1) {
 			printf ("Pilihan menu tidak ada. Masukan ulang!\n");
-		} else if (inputMenuUtama == 1) {
-			//ProyekBaru();
-		} else if (inputMenuUtama == 2) {
-			//MuatProyekLama();
+		} else if (inputMenu == 1) {
+			//NewProject();
+			//MenuUtama();
+		} else if (inputMenu == 2) {
+			//LoadProject();
+			//Jika file ada, maka muat MenuUtama();
 		}
-	} while (inputMenuUtama!=3);
+		printf ("\n");
+	} while (inputMenu!=3);
 }
