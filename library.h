@@ -8,3 +8,5 @@
 /* Penulisan konstanta pakai #define aja yaaa					 */
 
 #include <stdio.h>
+
+int inputMenuUtama;
