@@ -45,3 +45,8 @@ void LayoutingManual();
 void TampilkanRouting();
 // Prosedur melakukan routing manual : meminta input sambungan simpul/node dari user (memilih simbol juga)
 void RoutingManual();
+
+void LayoutOtomatis();
+void RoutingOtomatis();
+void DesignRuleChecker();
+void SaveProject();
