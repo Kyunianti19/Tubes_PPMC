@@ -39,37 +39,36 @@ int main () {
 //	file2 = fopen ("emitter_routing.csv", "w");
 //	fprintf (file2, "%d, %d\n", 9, 1);
 //	fclose (file2);
-	char buff[20][20];
+	char buff[41][200];
 	char *token;
-	file1 = fopen ("emitter_layout.csv", "r");
-	fscanf (file1, "%d, %d\n", &A, &B);
-	printf("%d %d\n", A, B);
-	for (i=0; i<B; i++) {
-		fgets (buff[i], 20, file1);
-
-//		for (j=0; j<B-1; j++) {
-//			fscanf (file1, "%s", varLayout.simbol[i][j]);
-//		}
-//		fscanf (file1, "%s\n", varLayout.simbol[i][j]);
+	file1 = fopen ("uji_coba2_layout.csv", "r");
+//	fscanf (file1, "%d,%d", &A, &B);
+//	printf("%d %d\n", A, B);
+	//fgets (buff[0], 200, file1);
+	for (i=0; i<41; i++) {
+		//fscanf (file1, "%s\n", buff[i]);
+		fgets (buff[i], 200, file1);
 	}
+	token = strtok(buff[0], ","); A = atoi(token);
+	token = strtok(NULL, "\n"); B = atoi(token);
 	
-
-	
-	for (i=0; i<3; i++) {
+	for (i=1; i<B+1; i++) {
 		printf ("%s\n", buff[i]);
 //		for (j=0; j<2; j++) {
 //			printf ("Ini (%d,%d) : %s\n", i, j, varLayout.simbol[i][j]);
 //		}
 		//printf ("%s\n", varLayout.simbol[i][j]);
 	}
-	for (i=0; i<B; i++) {
+	for (i=1; i<B+1; i++) {
 		j = 0;
-		token = strtok(buff[i], ",\n"); printf ("Ini : %s\n", token);
-		strcpy (varLayout.simbol[i][j], token); printf ("Itu : %s\n", varLayout.simbol[i][j]);
-		for (j=1; j<A; j++) {
-			token = strtok(NULL, ",\n"); printf ("Ini : %s\n", token);
-			strcpy (varLayout.simbol[i][j], token); printf ("Itu : %s\n", varLayout.simbol[i][j]);
+		token = strtok(buff[i], ",\n"); printf ("token :%scek\n", token);
+		strcpy (varLayout.simbol[i][j], token); printf ("var %d: %s\n", j+1, varLayout.simbol[i][j]);
+		for (j=1; j<A-1; j++) {
+			token = strtok(NULL, ",\n"); printf ("token :%scek\n", token);
+			strcpy (varLayout.simbol[i][j], token); printf ("var %d: %s\n", j+1, varLayout.simbol[i][j]);
 		}
+		token = strtok(NULL, "\n"); printf ("token :%scek\n", token);
+		strcpy (varLayout.simbol[i][j], token); printf ("var %d: %s\n", j+1, varLayout.simbol[i][j]);
 	}
 	fclose (file1);
 	//printf ("Ini kosong : %s\n", varLayout.simbol[i][j]);

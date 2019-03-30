@@ -23,8 +23,6 @@
 /* -----LIST KONSTANTA----- */
 // Ukuran PCB dot matriks maksimum
 #define dimensiMaks 40 
-// Jika arrayPCB.simbol tidak terisi, berikan nilai kosong (jangan NULL!)
-#define kosong ' '
 
 /* -----LIST STRUKTUR DATA----- */
 // tipe data bentukan untuk variabel layout dan routing
@@ -53,26 +51,36 @@ arrayPCB varLayout, varRouting;
 /* -----LIST FUNGSI----- */
 // Prosedur untuk membuat proyek baru, meminta input nama proyek dan ukuran PCB
 void NewProject();
+
 // Prosedur untuk memuat proyek lama (sudah ada filenya)
 // Meminta nama file, jika tidak ada file tersebut beri suatu pesan
 // File ada maka return 1, jika tidak ada maka return 0
 int LoadProject();
+
 // Prosedur untuk menampilkan menu utama dan pilihan modenya
 void MenuUtama();
+
 // Prosedur menampilkan layout rangkaian PCB Dot Matriks
 void TampilkanLayout();
+
 // Prosedur melakukan layout manual : meminta input komponen dari user
 void LayoutingManual();
+
 // Prosedur menampilkan routing rangkaian PCB Dot Matriks
 void TampilkanRouting();
+
 // Prosedur melakukan routing manual : meminta input sambungan simpul/node dari user (memilih simbol juga)
 void RoutingManual();
+
 // Prosedur melakukan layout otomatis
 void LayoutOtomatis();
+
 // Prosedur melakukan routing otomatis
 void RoutingOtomatis();
+
 // Prosedur ....
 void DesignRuleChecker();
+
 // Prosedur menyimpan kembali variabel ke dalam file eksternalnya
-// Jangan lupa tutup file-nya
+// Jangan lupa buka file untuk di-write lalu tutup file-nya
 void SaveProject();

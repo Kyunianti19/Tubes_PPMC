@@ -13,9 +13,30 @@
 /* -----IMPLEMENTASI FUNGSI----- */
 // Prosedur untuk membuat proyek baru, meminta input nama proyek dan ukuran PCB
 void NewProject() {
+	int i, j;
+
 	printf ("\n====== Membuat Proyek Baru ======\n");
-	printf ("Masukkan nama proyek: "); //scanf ("%s", &namaProyek);
-	getchar(); gets (namaProyek);
+	do {
+		// Input nama proyek yang diinginkan user
+		printf ("Masukkan nama proyek: ");
+		scanf ("%s", namaProyek);
+		// Mengecek file eksternal baru untuk Layout dan Routing, serta membuka file tersebut untuk dilakukan pembacaan ada tidaknya file
+		strcpy(filenameLayout, namaProyek);
+		strcpy(filenameRouting, namaProyek);
+		strcat(filenameLayout, "_layout.csv");
+		strcat(filenameRouting, "_routing.csv");
+		fileLayout = fopen(filenameLayout, "r");
+		fileRouting = fopen(filenameRouting, "r");
+		if ((fileLayout!=NULL)&&(fileRouting!=NULL)) {
+			printf ("Nama proyek sudah ada. Silahkan tulis nama lain!\n");
+		}
+	} while ((fileLayout!=NULL)&&(fileRouting!=NULL));
+	// Menutup pembacaan file, lalu membuka kembali untuk dituliskan file baru
+	fclose(fileLayout);
+	fclose(fileRouting);
+	fileLayout = fopen(filenameLayout, "w");
+	fileRouting = fopen(filenameRouting, "w");
+	// Input ukuran PCB hingga memenuhi syarat
 	printf ("Masukkan ukuran PCB NxM (0<N,M<=40):\n");
 	do {
 		printf ("Masukkan N (jumlah kolom): "); scanf ("%d", &varLayout.colNeff);
@@ -25,12 +46,27 @@ void NewProject() {
 	} while (varLayout.rowNeff<1 || varLayout.rowNeff>40);
 	varRouting.colNeff = varLayout.colNeff;
 	varRouting.rowNeff = varLayout.rowNeff;
-	strcpy(filenameLayout, namaProyek);
-	strcpy(filenameRouting, namaProyek);
-	strcat(filenameLayout, "_layout.csv");
-	strcat(filenameRouting, "_routing.csv");
-	fileLayout = fopen(filenameLayout, "w");
-	fileRouting = fopen(filenameRouting, "w");
+	// Menginisiasi semua nilai simbol dalam variabel Layout dan Routing menjadi kosong (' '), JANGAN berikan nilai NULL
+	for (i=0; i<varLayout.rowNeff; i++) {
+		for (j=0; j<varLayout.colNeff; j++) {
+			varLayout.simbol[i][j][0]= ' ';
+			varRouting.simbol[i][j][0] = ' ';
+		}
+	}
+	// Inisiasi file Layout dan Routing, agar formatnya benar
+	fprintf (fileLayout, "%d,%d\n", varLayout.colNeff, varLayout.rowNeff);
+	fprintf (fileRouting, "%d,%d\n", varRouting.colNeff, varRouting.rowNeff);
+	for (i=0; i<varLayout.rowNeff; i++) {
+		for (j=0; j<varLayout.colNeff-1; j++) {
+			fprintf (fileLayout, "%s,", varLayout.simbol[i][j]);
+			fprintf (fileRouting, "%s,", varRouting.simbol[i][j]);
+		}
+		fprintf (fileLayout, "%s\n", varLayout.simbol[i][j]);
+		fprintf (fileRouting, "%s\n", varRouting.simbol[i][j]);
+	}
+	// Menutup file
+	fclose(fileLayout);
+	fclose(fileRouting);
 	printf("\n");
 }
 
@@ -40,33 +76,58 @@ void NewProject() {
 int LoadProject() {
 	int i, j;
 	char *token;
-	char fileLine[200];
+	char fileLine[41][200];
 
+	// Meminta input nama proyek yang ingin dibuka
+	// Mmebuka file proyek untuk Layout dan Routing dengan nama tersebut
 	printf ("\n====== Memuat Proyek Lama ======\n");
-	printf ("Masukkan nama proyek: "); //scanf ("%s", &namaProyek);
-	getchar(); gets (namaProyek);
+	printf ("Masukkan nama proyek: ");
+	scanf ("%s", namaProyek);
 	strcpy(filenameLayout, namaProyek);
 	strcpy(filenameRouting, namaProyek);
 	strcat(filenameLayout, "_layout.csv");
 	strcat(filenameRouting, "_routing.csv");
 	fileLayout = fopen(filenameLayout, "r");
 	fileRouting = fopen(filenameRouting, "r");
+	// Jika tidak ditemukan file-nya, maka beri pesan kesalahan pada menu utama
 	if ((fileLayout==NULL)&&(fileRouting==NULL)) {
 		return 0;
-	} else {
-		fscanf(fileLayout, "%d, %d\n", &varLayout.colNeff, &varLayout.rowNeff);
-		//printf ("%d %d \n", varLayout.colNeff, varLayout.rowNeff); // Debug
-		for (i=0; i<varLayout.rowNeff; i++) {
-			fgets (fileLine, 200, fileLayout);
+	} 
+	// Jika file ditemukan, maka masukkan data dari file ke dalam variabel di program ini
+	else {
+		// Memasukkan data fileLayout ke dalam variabel varLayout
+		for (i=0; i<41; i++) {
+			fgets(fileLine[i], 200, fileLayout);
 		}
-		for (i=0; i<varLayout.rowNeff; i++) {
+		token = strtok(fileLine[0], ","); varLayout.colNeff = atoi(token);
+		token = strtok(NULL, "\n"); varLayout.rowNeff = atoi(token);
+		for (i=1; i<varLayout.rowNeff+1; i++) {
 			j = 0;
-			token = strtok(fileLine, ",\n");
-			strcpy (varLayout.simbol[i][j], token);
-			for (j=1; j<varLayout.colNeff-1; i++) {
-				token = strtok(NULL, ",\n");
-				strcpy (varLayout.simbol[i][j], token);
+			token = strtok(fileLine[i], ",");
+			strcpy (varLayout.simbol[i-1][j], token); //printf ("Ini :%sspasi\n", varLayout.simbol[i-1][j]); //Debug
+			for (j=1; j<varLayout.colNeff-1; j++) {
+				token = strtok(NULL, ",");
+				strcpy (varLayout.simbol[i-1][j], token); //printf ("Ini :%sspasi\n", varLayout.simbol[i-1][j]); //Debug
 			}
+			token = strtok(NULL, "\n");
+			strcpy (varLayout.simbol[i-1][j], token); //printf ("Ini :%sspasi\n", varLayout.simbol[i-1][j]); //Debug
+		}
+		// Memasukkan data fileRouting ke dalam variabel varRouting
+		for (i=0; i<41; i++) {
+			fgets(fileLine[i], 200, fileRouting);
+		}
+		token = strtok(fileLine[0], ","); varRouting.colNeff = atoi(token);
+		token = strtok(NULL, "\n"); varRouting.rowNeff = atoi(token);
+		for (i=1; i<varRouting.rowNeff+1; i++) {
+			j = 0;
+			token = strtok(fileLine[i], ",");
+			strcpy (varRouting.simbol[i-1][j], token); //printf ("Ini :%sspasi\n", varRouting.simbol[i-1][j]); //Debug
+			for (j=1; j<varRouting.colNeff-1; j++) {
+				token = strtok(NULL, ",");
+				strcpy (varRouting.simbol[i-1][j], token); //printf ("Ini :%sspasi\n", varRouting.simbol[i-1][j]); //Debug
+			}
+			token = strtok(NULL, "\n");
+			strcpy (varRouting.simbol[i-1][j], token); //printf ("Ini :%sspasi\n", varRouting.simbol[i-1][j]); //Debug
 		}
 		printf("\n");
 		return 1;
@@ -135,5 +196,5 @@ void RoutingOtomatis();
 void DesignRuleChecker();
 
 // Prosedur menyimpan kembali variabel ke dalam file eksternalnya
-// Jangan lupa tutup file-nya
+// Jangan lupa buka file untuk di-write lalu tutup file-nya
 void SaveProject();
