@@ -14,8 +14,8 @@
 // Prosedur untuk membuat proyek baru, meminta input nama proyek dan ukuran PCB
 void NewProject() {
 	printf ("\n====== Membuat Proyek Baru ======\n");
-	printf ("Masukkan nama proyek: "); scanf ("%s", &namaProyek);
-	//scanf("%[^\n]s", &namaProyek);
+	printf ("Masukkan nama proyek: "); //scanf ("%s", &namaProyek);
+	getchar(); gets (namaProyek);
 	printf ("Masukkan ukuran PCB NxM (0<N,M<=40):\n");
 	do {
 		printf ("Masukkan N (jumlah kolom): "); scanf ("%d", &varLayout.colNeff);
@@ -38,7 +38,39 @@ void NewProject() {
 // Meminta nama file, jika tidak ada file tersebut beri suatu pesan
 // File ada maka return 1, jika tidak ada maka return 0
 int LoadProject() {
+	int i, j;
+	char *token;
+	char fileLine[200];
 
+	printf ("\n====== Memuat Proyek Lama ======\n");
+	printf ("Masukkan nama proyek: "); //scanf ("%s", &namaProyek);
+	getchar(); gets (namaProyek);
+	strcpy(filenameLayout, namaProyek);
+	strcpy(filenameRouting, namaProyek);
+	strcat(filenameLayout, "_layout.csv");
+	strcat(filenameRouting, "_routing.csv");
+	fileLayout = fopen(filenameLayout, "r");
+	fileRouting = fopen(filenameRouting, "r");
+	if ((fileLayout==NULL)&&(fileRouting==NULL)) {
+		return 0;
+	} else {
+		fscanf(fileLayout, "%d, %d\n", &varLayout.colNeff, &varLayout.rowNeff);
+		//printf ("%d %d \n", varLayout.colNeff, varLayout.rowNeff); // Debug
+		for (i=0; i<varLayout.rowNeff; i++) {
+			fgets (fileLine, 200, fileLayout);
+		}
+		for (i=0; i<varLayout.rowNeff; i++) {
+			j = 0;
+			token = strtok(fileLine, ",\n");
+			strcpy (varLayout.simbol[i][j], token);
+			for (j=1; j<varLayout.colNeff-1; i++) {
+				token = strtok(NULL, ",\n");
+				strcpy (varLayout.simbol[i][j], token);
+			}
+		}
+		printf("\n");
+		return 1;
+	}
 }
 
 // Prosedur untuk menampilkan menu utama dan pilihan modenya

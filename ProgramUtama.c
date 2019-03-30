@@ -22,8 +22,11 @@ void main () {
 			NewProject();
 			MenuUtama();
 		} else if (inputMenu == 2) {
-			//LoadProject();
-			//Jika file ada, maka muat MenuUtama();
+			if (LoadProject()==1) {
+				MenuUtama();
+			} else {
+				printf ("Proyek tidak ditemukan\n");
+			}
 		}
 		printf ("\n");
 	} while (inputMenu!=3);

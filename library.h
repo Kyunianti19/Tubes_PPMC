@@ -23,17 +23,15 @@
 /* -----LIST KONSTANTA----- */
 // Ukuran PCB dot matriks maksimum
 #define dimensiMaks 40 
+// Jika arrayPCB.simbol tidak terisi, berikan nilai kosong (jangan NULL!)
+#define kosong ' '
 
 /* -----LIST STRUKTUR DATA----- */
-// tipe data bentukan string digunakan untuk simbol komponen (R1, R2, Te, dll)
-// dan juga digunakan untuk simbol jalur routing (!, @, #, dll) --> meskipun cuma 1 char
-typedef struct {
-	char ch[5];
-} string;
 // tipe data bentukan untuk variabel layout dan routing
 typedef struct {
-	string row[dimensiMaks];
-	string col[dimensiMaks];
+	// simbol akan berisi simbol komponen (R1, R2, Te, dll)
+	// dan juga digunakan untuk simbol jalur routing (!, @, #, dll) --> meskipun cuma 1 char
+	char simbol[dimensiMaks][dimensiMaks][5];
 	int rowNeff; // Nilai efektif jumlah baris yang dipilih user
 	int colNeff; // Nilai efektif jumlah kolom yang dipilih user
 } arrayPCB;
