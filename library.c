@@ -62,13 +62,27 @@ void MenuUtama() {
 
 // Prosedur menampilkan layout rangkaian PCB Dot Matriks
 void TampilkanLayout();
+
 // Prosedur melakukan layout manual : meminta input komponen dari user
 void LayoutingManual(){
 	int i,j,k;
 	
 };
-// Prosedur menampilkan routing rangkaian PCB Dot Matriks
 
+// Prosedur menampilkan routing rangkaian PCB Dot Matriks
 void TampilkanRouting();
+
 // Prosedur melakukan routing manual : meminta input sambungan simpul/node dari user (memilih simbol juga)
 void RoutingManual();
+
+// Prosedur melakukan layout otomatis
+void LayoutOtomatis();
+
+// Prosedur melakukan routing otomatis
+void RoutingOtomatis();
+
+// Prosedur ....
+void DesignRuleChecker();
+
+// Prosedur menyimpan kembali variabel ke dalam file eksternalnya
+void SaveProject();

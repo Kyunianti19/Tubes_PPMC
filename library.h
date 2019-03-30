@@ -25,8 +25,6 @@
 /* -----LIST VARIABEL GLOBAL----- */
 // variabel inputMenu dan inputMode menyimpan nilai pilihan menu masukkan dari user
 int inputMenu, inputMode; 
-// variabel iterasi, jika diperlukan
-int i, j, k;
 
 /* -----LIST FUNGSI----- */
 // Prosedur untuk membuat proyek baru, meminta input nama proyek dan ukuran PCB
@@ -45,8 +43,11 @@ void LayoutingManual();
 void TampilkanRouting();
 // Prosedur melakukan routing manual : meminta input sambungan simpul/node dari user (memilih simbol juga)
 void RoutingManual();
-
+// Prosedur melakukan layout otomatis
 void LayoutOtomatis();
+// Prosedur melakukan routing otomatis
 void RoutingOtomatis();
+// Prosedur ....
 void DesignRuleChecker();
+// Prosedur menyimpan kembali variabel ke dalam file eksternalnya
 void SaveProject();
