@@ -6,7 +6,7 @@
 /*    pada huruf pertama kata selanjutnya untuk memisahkan          */
 /* contoh variabel benar : resistorAwal, teganganInput              */
 /* Penulisan konstanta pakai #define aja yaaa					    */
-//cekckeckcekkcek
+//==================================================================//
 
 #include "library.h"
 
