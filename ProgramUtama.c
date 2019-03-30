@@ -19,8 +19,8 @@ void main () {
 		if (inputMenu > 3 || inputMenu < 1) {
 			printf ("Pilihan menu tidak ada. Masukan ulang!\n");
 		} else if (inputMenu == 1) {
-			//NewProject();
-			//MenuUtama();
+			NewProject();
+			MenuUtama();
 		} else if (inputMenu == 2) {
 			//LoadProject();
 			//Jika file ada, maka muat MenuUtama();

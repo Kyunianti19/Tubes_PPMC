@@ -13,7 +13,25 @@
 /* -----IMPLEMENTASI FUNGSI----- */
 // Prosedur untuk membuat proyek baru, meminta input nama proyek dan ukuran PCB
 void NewProject() {
-
+	printf ("\n====== Membuat Proyek Baru ======\n");
+	printf ("Masukkan nama proyek: "); scanf ("%s", &namaProyek);
+	//scanf("%[^\n]s", &namaProyek);
+	printf ("Masukkan ukuran PCB NxM (0<N,M<=40):\n");
+	do {
+		printf ("Masukkan N (jumlah kolom): "); scanf ("%d", &varLayout.colNeff);
+	} while (varLayout.colNeff<1 || varLayout.colNeff>40);
+	do {
+		printf ("Masukkan M (jumlah baris): "); scanf ("%d", &varLayout.rowNeff);
+	} while (varLayout.rowNeff<1 || varLayout.rowNeff>40);
+	varRouting.colNeff = varLayout.colNeff;
+	varRouting.rowNeff = varLayout.rowNeff;
+	strcpy(filenameLayout, namaProyek);
+	strcpy(filenameRouting, namaProyek);
+	strcat(filenameLayout, "_layout.csv");
+	strcat(filenameRouting, "_routing.csv");
+	fileLayout = fopen(filenameLayout, "w");
+	fileRouting = fopen(filenameRouting, "w");
+	printf("\n");
 }
 
 // Prosedur untuk memuat proyek lama (sudah ada filenya)
@@ -85,4 +103,5 @@ void RoutingOtomatis();
 void DesignRuleChecker();
 
 // Prosedur menyimpan kembali variabel ke dalam file eksternalnya
+// Jangan lupa tutup file-nya
 void SaveProject();
