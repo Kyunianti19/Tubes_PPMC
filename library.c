@@ -193,7 +193,17 @@ void LayoutOtomatis();
 void RoutingOtomatis();
 
 // Prosedur ....
-void DesignRuleChecker();
+void designRuleChecker(char mat[Nmax][Nmax]) {
+		for (int i = 1; i <=Nmax; i++)
+			{
+				for (int j = 1; j <=Nmax; j++)
+					{
+						if (mat[i][j] == mat[i+1][j+1])
+							{
+							
+						}
+								
+
 
 // Prosedur menyimpan kembali variabel ke dalam file eksternalnya
 // Jangan lupa buka file untuk di-write lalu tutup file-nya
