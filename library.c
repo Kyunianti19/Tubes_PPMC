@@ -184,7 +184,76 @@ void LayoutingManual(){
 void TampilkanRouting();
 
 // Prosedur melakukan routing manual : meminta input sambungan simpul/node dari user (memilih simbol juga)
-void RoutingManual();
+void RoutingManual(){
+	int i,j,k, tempx,tempy;
+	char simb;		//input simbol
+	char koord[4];	//input koordinat
+	int x,y; 		//kordinat
+	char *token;
+
+	tempx=0;
+	tempy=0;
+	k=1;
+ /*
+	int Hitungjarak(int x, int y){
+		float r;
+		r=x*x+y*y;
+		if (r==2) {return 1}
+		else {return 0}  ;
+	} 
+*/
+
+	printf("Isi `q` atau `Q` untuk kembali ke menu\n");
+	printf("Isi `n` atau `N` untuk memulai pada simpul (node) baru\n");
+	do {
+		printf("Pilih Simbol (!,@,#,$,%,^,&,*,(,)): ");
+		scanf("%c",&simb);
+		while (simb != ('!'||'@'||'#'||'$'||'%'||'^'||'&'||'*'||',')){
+			printf("Ulangi input simbol, simbol salah\n");
+			printf("Pilih Simbol (!,@,#,$,%,^,&,*,(,)): ");
+			scanf("%c",&simb);
+		}
+
+		printf("Kordinat %d: ",k);
+		scanf("%s",&koord);
+		while (koord!=('q'||'Q')&&koord!=('n'||'N')){
+			token = strtok(koord,","); x=atoi(token); tempx=x;
+			token = strtok(NULL,"\n"); y=atoi(token); tempy=y;
+			if (Hitungjarak(x-tempx,y-tempy)=1) {
+				strcpy(varRouting.simbol[x][y], simb);
+			}else{
+				if (x=tempx){
+					if (tempy<y) {
+						for (j=tempy+1;j<=y; j++){
+							strcpy(varRouting.simbol[x][j], simb);
+						}
+					} else if (y<tempy){
+						for (j=y+1;j<=tempy;j++){
+							strcpy(varRouting.simbol[x][j], simb);
+						}
+					}
+				} else if (y=tempy){
+					if (tempx<x) {
+						for (i=tempx+1;i<=x; i++){
+							strcpy(varRouting.simbol[i][y], simb);
+						}
+					} else if (x<tempx){
+						for (i=x+1;i<=tempx;i++){
+							strcpy(varRouting.simbol[i][y], simb);
+						}
+					}
+				}
+			}
+
+			printf("Kordinat %d: ",k++);
+			scanf("%s",&koord);
+
+		};
+		
+
+	} while (koord==('n'||'N')&&koord!=('q'||'Q')); //quit dan new hal yang berbeda belom di fixed in
+	
+};
 
 // Prosedur melakukan layout otomatis
 void LayoutOtomatis();
