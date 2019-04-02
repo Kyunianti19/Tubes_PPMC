@@ -181,7 +181,24 @@ void LayoutingManual(){
 };
 
 // Prosedur menampilkan routing rangkaian PCB Dot Matriks
-void TampilkanRouting();
+void tampilkanRouting(char route[Rmax][Cmax]){
+		for (int i = 0; i <=Rmax; i++) {
+			for (int j = 0; j<=Cmax; j++){
+				if ( i==0){
+					for (int k = 1;k<=Cmax;k++){
+						if(k==Cmax){
+							printf("\n",k);}
+						else {
+							printf(" %d",k);}}							
+				else {
+					if ( j=0){
+						prinf("%d",i);}
+					else {
+						if (route[i-1][j-1] = NULL){
+							printf(" ");}
+						else {
+							printf("%c",route[i-1][j-1]); }}}}}}}
+							
 
 // Prosedur melakukan routing manual : meminta input sambungan simpul/node dari user (memilih simbol juga)
 void RoutingManual(){
