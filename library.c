@@ -203,7 +203,7 @@ void tampilkanRouting(char route[Rmax][Cmax]){
 	
 // Prosedur melakukan routing manual : meminta input sambungan simpul/node dari user (memilih simbol juga)
 void RoutingManual(){
-	int i,j,k, tempx,tempy;
+	int i,j,k,s, tempx,tempy;
 	char simb,jwb;		//input simbol dan jawaban
 	char koord[4];	//input koordinat
 	int x,y; 		//kordinat
@@ -218,7 +218,7 @@ void RoutingManual(){
 	do {
 		printf("Pilih Simbol (!,@,#,$,%,^,&,*,(,)): ");
 		scanf("%c",&simb);
-		k=1;
+		k=1; s=1;
 		while (simb != ('!'||'@'||'#'||'$'||'%'||'^'||'&'||'*'||',')){
 			printf("Ulangi input simbol, simbol salah\n");
 			printf("Pilih Simbol (!,@,#,$,%,^,&,*,(,)): ");
@@ -230,9 +230,9 @@ void RoutingManual(){
 		while (koord!=('q'||'Q')&&koord!=('n'||'N')){
 			token = strtok(koord,","); x=atoi(token); 
 			token = strtok(NULL,"\n"); y=atoi(token);
-			route[k][0] = simb;
-			route[k][1] = tempx; route[k][3] = x;
-			route[k][2] = tempy; route[k][4] = y;
+			route[s][k][0] = simb;
+			route[s][k][1] = tempx; route[s][k][3] = x;
+			route[s][k][2] = tempy; route[s][k][4] = y;
 			
 			if (Hitungjarak(x-tempx,y-tempy)<=2) {
 				if (varRouting.simbol[x][y]==('!'||'@'||'#'||'$'||'%'||'^'||'&'||'*'||',')) {
@@ -310,7 +310,7 @@ void RoutingManual(){
 			scanf("%s",&koord);
 
 		}
-		
+		s++;
 
 	} while (koord==('n'||'N'));
 

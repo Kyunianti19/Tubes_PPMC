@@ -50,7 +50,7 @@ FILE *fileDRC;
 arrayPCB varLayout, varRouting;
 
 //Variabel untuk menyimpan tracing routing manual
-int route[160][5];
+int route[30][160][5];
 
 /* -----LIST FUNGSI----- */
 // Prosedur untuk membuat proyek baru, meminta input nama proyek dan ukuran PCB
