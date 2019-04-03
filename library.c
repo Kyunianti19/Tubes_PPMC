@@ -246,7 +246,7 @@ void RoutingManual(){
 				}
 			}else{
 				if (x=tempx){
-					if (tempy<y) {
+					if (tempy<=y) {
 						for (j=tempy+1;j<=y; j++){
 							if (varRouting.simbol[x][j]==('!'||'@'||'#'||'$'||'%'||'^'||'&'||'*'||',')) {
 								printf("\nRouting melewati jalur lain, merge ?");
