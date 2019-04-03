@@ -49,6 +49,9 @@ FILE *fileDRC;
 // variabel yang menyimpan data Layout dan Routing
 arrayPCB varLayout, varRouting;
 
+//Variabel untuk menyimpan tracing routing manual
+int route[160][5];
+
 /* -----LIST FUNGSI----- */
 // Prosedur untuk membuat proyek baru, meminta input nama proyek dan ukuran PCB
 void NewProject();
@@ -85,3 +88,6 @@ void DesignRuleChecker();
 // Prosedur menyimpan kembali variabel ke dalam file eksternalnya
 // Jangan lupa buka file untuk di-write lalu tutup file-nya
 void SaveProject();
+
+//Fungsi menghitung jarak, mengembalikan jarak dalam kordinat polar
+int Hitungjarak(int x, int y);

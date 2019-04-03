@@ -198,33 +198,27 @@ void tampilkanRouting(char route[Rmax][Cmax]){
 							printf(" ");}
 						else {
 							printf("%c",route[i-1][j-1]); }}}}}}}
-							
 
+
+	
 // Prosedur melakukan routing manual : meminta input sambungan simpul/node dari user (memilih simbol juga)
 void RoutingManual(){
 	int i,j,k, tempx,tempy;
-	char simb;		//input simbol
+	char simb,jwb;		//input simbol dan jawaban
 	char koord[4];	//input koordinat
 	int x,y; 		//kordinat
 	char *token;
 
 	tempx=0;
 	tempy=0;
-	k=1;
- /*
-	int Hitungjarak(int x, int y){
-		float r;
-		r=x*x+y*y;
-		if (r==2) {return 1}
-		else {return 0}  ;
-	} 
-*/
+	
 
 	printf("Isi `q` atau `Q` untuk kembali ke menu\n");
 	printf("Isi `n` atau `N` untuk memulai pada simpul (node) baru\n");
 	do {
 		printf("Pilih Simbol (!,@,#,$,%,^,&,*,(,)): ");
 		scanf("%c",&simb);
+		k=1;
 		while (simb != ('!'||'@'||'#'||'$'||'%'||'^'||'&'||'*'||',')){
 			printf("Ulangi input simbol, simbol salah\n");
 			printf("Pilih Simbol (!,@,#,$,%,^,&,*,(,)): ");
@@ -234,43 +228,94 @@ void RoutingManual(){
 		printf("Kordinat %d: ",k);
 		scanf("%s",&koord);
 		while (koord!=('q'||'Q')&&koord!=('n'||'N')){
-			token = strtok(koord,","); x=atoi(token); tempx=x;
-			token = strtok(NULL,"\n"); y=atoi(token); tempy=y;
-			if (Hitungjarak(x-tempx,y-tempy)=1) {
-				strcpy(varRouting.simbol[x][y], simb);
+			token = strtok(koord,","); x=atoi(token); 
+			token = strtok(NULL,"\n"); y=atoi(token);
+			route[k][0] = simb;
+			route[k][1] = tempx; route[k][3] = x;
+			route[k][2] = tempy; route[k][4] = y;
+			
+			if (Hitungjarak(x-tempx,y-tempy)<=2) {
+				if (varRouting.simbol[x][y]==('!'||'@'||'#'||'$'||'%'||'^'||'&'||'*'||',')) {
+					printf("Routing melewati jalur lain, merge ?");
+					scanf("%c",&jwb);
+					if (jwb==('y'||'Y')) {
+						strcpy(varRouting.simbol[x][y],strcat(varRouting.simbol[x][y],simb));
+					}else if (jwb==('n'||'N')) {
+						strcpy(varRouting.simbol[x][y], simb);
+					}
+				}
 			}else{
 				if (x=tempx){
 					if (tempy<y) {
 						for (j=tempy+1;j<=y; j++){
-							strcpy(varRouting.simbol[x][j], simb);
+							if (varRouting.simbol[x][j]==('!'||'@'||'#'||'$'||'%'||'^'||'&'||'*'||',')) {
+								printf("\nRouting melewati jalur lain, merge ?");
+								scanf("%c",&jwb);
+								if (jwb==('y'||'Y')) {
+									strcpy(varRouting.simbol[x][j],strcat(varRouting.simbol[x][j],simb));
+								}else if (jwb==('n'||'N')) {
+									strcpy(varRouting.simbol[x][j], simb);
+								}	
+							}
+							//strcpy(varRouting.simbol[x][j], simb);
 						}
 					} else if (y<tempy){
 						for (j=y+1;j<=tempy;j++){
-							strcpy(varRouting.simbol[x][j], simb);
+							if (varRouting.simbol[x][j]==('!'||'@'||'#'||'$'||'%'||'^'||'&'||'*'||',')) {
+								printf("\nRouting melewati jalur lain, merge ?");
+								scanf("%c",&jwb);
+								if (jwb==('y'||'Y')) {
+									strcpy(varRouting.simbol[x][j],strcat(varRouting.simbol[x][j],simb));
+								}else if (jwb==('n'||'N')) {
+									strcpy(varRouting.simbol[x][j], simb);
+								}	
+							}
+							//strcpy(varRouting.simbol[x][j], simb);
 						}
 					}
 				} else if (y=tempy){
 					if (tempx<x) {
 						for (i=tempx+1;i<=x; i++){
-							strcpy(varRouting.simbol[i][y], simb);
+							if (varRouting.simbol[i][y]==('!'||'@'||'#'||'$'||'%'||'^'||'&'||'*'||',')) {
+								printf("\nRouting melewati jalur lain, merge ?");
+								scanf("%c",&jwb);
+								if (jwb==('y'||'Y')) {
+									strcpy(varRouting.simbol[i][y],strcat(varRouting.simbol[i][y],simb));
+								}else if (jwb==('n'||'N')) {
+									strcpy(varRouting.simbol[i][y], simb);
+								}	
+							}
+							//strcpy(varRouting.simbol[i][y], simb);
 						}
 					} else if (x<tempx){
 						for (i=x+1;i<=tempx;i++){
-							strcpy(varRouting.simbol[i][y], simb);
+							if (varRouting.simbol[i][y]==('!'||'@'||'#'||'$'||'%'||'^'||'&'||'*'||',')) {
+								printf("\nRouting melewati jalur lain, merge ?");
+								scanf("%c",&jwb);
+								if (jwb==('y'||'Y')) {
+									strcpy(varRouting.simbol[i][y],strcat(varRouting.simbol[i][y],simb));
+								}else if (jwb==('n'||'N')) {
+									strcpy(varRouting.simbol[i][y], simb);
+								}	
+							}
+							//strcpy(varRouting.simbol[i][y], simb);
 						}
 					}
 				}
 			}
 
+			tempy=y;
+			tempx=x;
 			printf("Kordinat %d: ",k++);
 			scanf("%s",&koord);
 
-		};
+		}
 		
 
-	} while (koord==('n'||'N')&&koord!=('q'||'Q')); //quit dan new hal yang berbeda belom di fixed in
-	
-};
+	} while (koord==('n'||'N'));
+
+	MenuUtama();	
+}
 
 // Prosedur melakukan layout otomatis
 void LayoutOtomatis();
@@ -294,3 +339,9 @@ void designRuleChecker(char mat[Nmax][Nmax]) {
 // Prosedur menyimpan kembali variabel ke dalam file eksternalnya
 // Jangan lupa buka file untuk di-write lalu tutup file-nya
 void SaveProject();
+
+int Hitungjarak(int x, int y){
+		float r;
+		r=x*x+y*y;
+		return (r);  
+	}
