@@ -219,7 +219,7 @@ void RoutingManual(){
 		printf("Pilih Simbol (!,@,#,$,%,^,&,*,(,)): ");
 		scanf("%c",&simb);
 		k=1; s=1;
-		while (simb != ('!'||'@'||'#'||'$'||'%'||'^'||'&'||'*'||',')){
+		while (simb !='!'||simb !='@'||simb !='#'||simb !='$'||simb !='%'||simb !='^'||simb !='&'||simb !='*'||simb !=','){
 			printf("Ulangi input simbol, simbol salah\n");
 			printf("Pilih Simbol (!,@,#,$,%,^,&,*,(,)): ");
 			scanf("%c",&simb);
@@ -227,7 +227,7 @@ void RoutingManual(){
 
 		printf("Kordinat %d: ",k);
 		scanf("%s",&koord);
-		while (koord!=('q'||'Q')&&koord!=('n'||'N')){
+		while ((koord!='q'||koord!='Q')&&(koord!='n'||koord!='N')){
 			token = strtok(koord,","); x=atoi(token); 
 			token = strtok(NULL,"\n"); y=atoi(token);
 			route[s][k][0] = simb;
@@ -235,70 +235,26 @@ void RoutingManual(){
 			route[s][k][2] = tempy; route[s][k][4] = y;
 			
 			if (Hitungjarak(x-tempx,y-tempy)<=2) {
-				if (varRouting.simbol[x][y]==('!'||'@'||'#'||'$'||'%'||'^'||'&'||'*'||',')) {
-					printf("Routing melewati jalur lain, merge ?");
-					scanf("%c",&jwb);
-					if (jwb==('y'||'Y')) {
-						strcpy(varRouting.simbol[x][y],strcat(varRouting.simbol[x][y],simb));
-					}else if (jwb==('n'||'N')) {
-						strcpy(varRouting.simbol[x][y], simb);
-					}
-				}
+				strcpy(varRouting.simbol[x][y], simb);
 			}else{
-				if (x=tempx){
+				if (x==tempx){
 					if (tempy<=y) {
 						for (j=tempy+1;j<=y; j++){
-							if (varRouting.simbol[x][j]==('!'||'@'||'#'||'$'||'%'||'^'||'&'||'*'||',')) {
-								printf("\nRouting melewati jalur lain, merge ?");
-								scanf("%c",&jwb);
-								if (jwb==('y'||'Y')) {
-									strcpy(varRouting.simbol[x][j],strcat(varRouting.simbol[x][j],simb));
-								}else if (jwb==('n'||'N')) {
-									strcpy(varRouting.simbol[x][j], simb);
-								}	
-							}
-							//strcpy(varRouting.simbol[x][j], simb);
+							strcpy(varRouting.simbol[x][j], simb);							
 						}
 					} else if (y<tempy){
 						for (j=y+1;j<=tempy;j++){
-							if (varRouting.simbol[x][j]==('!'||'@'||'#'||'$'||'%'||'^'||'&'||'*'||',')) {
-								printf("\nRouting melewati jalur lain, merge ?");
-								scanf("%c",&jwb);
-								if (jwb==('y'||'Y')) {
-									strcpy(varRouting.simbol[x][j],strcat(varRouting.simbol[x][j],simb));
-								}else if (jwb==('n'||'N')) {
-									strcpy(varRouting.simbol[x][j], simb);
-								}	
-							}
-							//strcpy(varRouting.simbol[x][j], simb);
+							strcpy(varRouting.simbol[x][j], simb);
 						}
 					}
-				} else if (y=tempy){
-					if (tempx<x) {
+				} else if (y==tempy){
+					if (tempx<=x) {
 						for (i=tempx+1;i<=x; i++){
-							if (varRouting.simbol[i][y]==('!'||'@'||'#'||'$'||'%'||'^'||'&'||'*'||',')) {
-								printf("\nRouting melewati jalur lain, merge ?");
-								scanf("%c",&jwb);
-								if (jwb==('y'||'Y')) {
-									strcpy(varRouting.simbol[i][y],strcat(varRouting.simbol[i][y],simb));
-								}else if (jwb==('n'||'N')) {
-									strcpy(varRouting.simbol[i][y], simb);
-								}	
-							}
-							//strcpy(varRouting.simbol[i][y], simb);
+							strcpy(varRouting.simbol[i][y], simb);
 						}
 					} else if (x<tempx){
 						for (i=x+1;i<=tempx;i++){
-							if (varRouting.simbol[i][y]==('!'||'@'||'#'||'$'||'%'||'^'||'&'||'*'||',')) {
-								printf("\nRouting melewati jalur lain, merge ?");
-								scanf("%c",&jwb);
-								if (jwb==('y'||'Y')) {
-									strcpy(varRouting.simbol[i][y],strcat(varRouting.simbol[i][y],simb));
-								}else if (jwb==('n'||'N')) {
-									strcpy(varRouting.simbol[i][y], simb);
-								}	
-							}
-							//strcpy(varRouting.simbol[i][y], simb);
+							strcpy(varRouting.simbol[i][y], simb);	
 						}
 					}
 				}
@@ -312,7 +268,7 @@ void RoutingManual(){
 		}
 		s++;
 
-	} while (koord==('n'||'N'));
+	} while (koord=='n'||koord=='N');
 
 	MenuUtama();	
 }
@@ -494,7 +450,9 @@ void designRuleChecker(component part[3][5]){
 
 // Prosedur menyimpan kembali variabel ke dalam file eksternalnya
 // Jangan lupa buka file untuk di-write lalu tutup file-nya
-void SaveProject();
+void SaveProject(){
+	
+}
 
 int Hitungjarak(int x, int y){
 		float r;
