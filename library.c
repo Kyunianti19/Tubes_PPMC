@@ -451,9 +451,28 @@ void designRuleChecker(component part[3][5]){
 // Prosedur menyimpan kembali variabel ke dalam file eksternalnya
 // Jangan lupa buka file untuk di-write lalu tutup file-nya
 void SaveProject(){
+	fileLayout = fopen(filenameLayout, "w");
+	fileRouting = fopen(filenameRouting, "w");
+
+	// Inisiasi file Layout dan Routing, agar formatnya benar
+	fprintf (fileLayout, "%d,%d\n", varLayout.colNeff, varLayout.rowNeff);
+	fprintf (fileRouting, "%d,%d\n", varRouting.colNeff, varRouting.rowNeff);
 	
+	for (int i=0; i<varLayout.rowNeff; i++) {
+		for (int j=0; j<varLayout.colNeff-1; j++) {
+			fprintf (fileLayout, "%s,", varLayout.simbol[i][j]);
+			fprintf (fileRouting, "%s,", varRouting.simbol[i][j]);
+		}
+		fprintf (fileLayout, "%s\n", varLayout.simbol[i][j]);
+		fprintf (fileRouting, "%s\n", varRouting.simbol[i][j]);
+	}
+	
+	fclose(fileLayout);
+	fclose(fileRouting);
+	printf("\n");
 }
 
+//Fungsi Menghitung jumlah kuadrat jarak dari koordinat 
 int Hitungjarak(int x, int y){
 		float r;
 		r=x*x+y*y;
