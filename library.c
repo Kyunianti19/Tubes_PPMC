@@ -216,20 +216,21 @@ void RoutingManual(){
 	printf("Isi `q` atau `Q` untuk kembali ke menu\n");
 	printf("Isi `n` atau `N` untuk memulai pada simpul (node) baru\n");
 	do {
-		printf("Pilih Simbol (!,@,#,$,%,^,&,*,(,)): ");
-		scanf("%c",&simb);
 		k=1; s=1;
-		while (strcmp(simb,'!')!=0||strcmp(simb,'@')!=0||strcmp(simb,'#')!=0||strcmp(simb,'$')!=0||strcmp(simb,'%')!=0||strcmp(simb,'^')!=0||strcmp(simb,'&')!=0||strcmp(simb,'*')!=0||strcmp(simb,',')!=0){
-			printf("Ulangi input simbol, simbol salah\n");
-			printf("Pilih Simbol (!,@,#,$,%,^,&,*,(,)): ");
-			scanf("%c",&simb);
-		}
+		do {
+			printf("\nPilih Simbol (!,@,#,$,%,^,&,*,(,)): ");
+			scanf(" %c",&simb);
+			if (simb!='!'&&simb!='@'&&simb!='#'&&simb!='$'&&simb!='%'&&simb!='^'&&simb!='&'&&simb!='*'&&simb!=','){
+				printf("Ulangi input simbol, simbol salah\n");
+			}
+		} while (simb!='!'&&simb!='@'&&simb!='#'&&simb!='$'&&simb!='%'&&simb!='^'&&simb!='&'&&simb!='*'&&simb!=',');
+			
 
 		printf("Kordinat %d: ",k);
 		scanf("%s",&koord);
-		while ((strcmp(koord,'q')!=0||strcmp(koord,'Q')!=0)&&(strcmp(koord,'n')!=0||strcmp(koord,'N')!=0)){
+		while ((strcmp(koord,"q")!=0)&&(strcmp(koord,"Q")!=0)&&(strcmp(koord,"n")!=0)&&(strcmp(koord,"N")!=0)){
 			token = strtok(koord,","); x=atoi(token); 
-			token = strtok(NULL,"\n"); y=atoi(token);
+			token = strtok(NULL,""); y=atoi(token);
 			route[s][k][0] = simb;
 			route[s][k][1] = tempx; route[s][k][3] = x;
 			route[s][k][2] = tempy; route[s][k][4] = y;
@@ -267,10 +268,9 @@ void RoutingManual(){
 
 		}
 		s++;
-
-	} while (strcmp(koord,'n')==0||strcmp(koord,'N')==0);
-
-	MenuUtama();	
+	
+	} while (strcmp(koord,"n")==0||strcmp(koord,"N")==0);
+	
 }
 
 // Prosedur melakukan layout otomatis
