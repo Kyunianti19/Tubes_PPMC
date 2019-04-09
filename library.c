@@ -388,7 +388,7 @@ void TampilkanRouting() {
 	}
 }
 	
-	
+
 // Prosedur melakukan routing manual : meminta input sambungan simpul/node dari user (memilih simbol juga)
 void RoutingManual(){
 	int i,j,k,s, tempx,tempy;
@@ -500,6 +500,7 @@ typedef struct komponen {
 
 component part[3][5];
 
+/*
 void designRuleChecker(component part[3][5]){
 		
 		int r = 1, c = 1; 
@@ -667,13 +668,15 @@ void designRuleChecker(component part[3][5]){
 }
 }
 }
-		
+		*/
 								
 
 
 // Prosedur menyimpan kembali variabel ke dalam file eksternalnya
 // Jangan lupa buka file untuk di-write lalu tutup file-nya
 void SaveProject(){
+	int i, j;
+
 	fileLayout = fopen(filenameLayout, "w");
 	fileRouting = fopen(filenameRouting, "w");
 
@@ -683,8 +686,8 @@ void SaveProject(){
 	// printf("%d\n", varLayout.colNeff ); //Debug
  //    printf("%d\n", varLayout.rowNeff ); //Debug
 	
-	for (int i=0; i<varLayout.rowNeff; i++) {
-		for (int j=0; j<varLayout.colNeff-1; j++) {
+	for (i=0; i<varLayout.rowNeff; i++) {
+		for (j=0; j<varLayout.colNeff-1; j++) {
 			fprintf (fileLayout, "%s,", varLayout.simbol[i][j]);
 			fprintf (fileRouting, "%s,", varRouting.simbol[i][j]);
 		}
