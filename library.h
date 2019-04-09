@@ -6,8 +6,8 @@
 /* 2. Dimulai lowercase, jika beda kata gunakan uppercase        */
 /*    pada huruf pertama kata selanjutnya untuk memisahkan       */
 /* contoh variabel benar : resistorAwal, teganganInput           */
-/* 3. Gunakan variabel i, j, atau k untuk proses iterasi		 */
-/* Penulisan konstanta pakai #define aja yaaa					 */
+/* 3. Gunakan variabel i, j, atau k untuk proses iterasi	 */
+/* Penulisan konstanta pakai #define aja yaaa			 */
 
 /* Ketentuan penulisan fungsi :                                  */
 /* 1. Nama jelas dan bermakna (jangan cuma A, B, C)              */
@@ -35,6 +35,29 @@ typedef struct {
 	int colNeff; // Nilai efektif jumlah kolom yang dipilih user
 } arrayPCB;
 
+//tipe data bentukan untuk layout
+typedef struct koor {
+    int x;
+    int y;
+}koor;
+
+typedef struct komponen2kaki {
+    char komp[10];//nama komponen
+    koor koor1;
+    koor koor2;
+}komponen2kaki;
+
+typedef struct komponen3kaki {
+    char komp[10];
+    koor koor1;
+    koor koor2;
+    koor koor3;
+}komponen3kaki;
+
+typedef struct kompfix {
+    char namkomp[10];
+}kompfix;
+
 /* -----LIST VARIABEL GLOBAL----- */
 // variabel inputMenu dan inputMode menyimpan nilai pilihan menu masukkan dari user
 int inputMenu, inputMode; 
@@ -51,6 +74,12 @@ arrayPCB varLayout, varRouting;
 
 //Variabel untuk menyimpan tracing routing manual
 int route[30][160][5];
+
+//variabel untuk layout 
+int valid=1, validasiOut=1;
+komponen2kaki tempkom2;
+komponen3kaki tempkom3;
+kompfix kompfix2 [40][40];
 
 /* -----LIST FUNGSI----- */
 // Prosedur untuk membuat proyek baru, meminta input nama proyek dan ukuran PCB
