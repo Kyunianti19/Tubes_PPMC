@@ -91,6 +91,9 @@ int LoadProject() {
 	fileRouting = fopen(filenameRouting, "r");
 	// Jika tidak ditemukan file-nya, maka beri pesan kesalahan pada menu utama
 	if ((fileLayout==NULL)&&(fileRouting==NULL)) {
+		// Menutup file
+		fclose(fileLayout);
+		fclose(fileRouting);
 		return 0;
 	} 
 	// Jika file ditemukan, maka masukkan data dari file ke dalam variabel di program ini
@@ -130,6 +133,9 @@ int LoadProject() {
 			strcpy (varRouting.simbol[i-1][j], token); //printf ("Ini :%sspasi\n", varRouting.simbol[i-1][j]); //Debug
 		}
 		printf("\n");
+		// Menutup file
+		fclose(fileLayout);
+		fclose(fileRouting);
 		return 1;
 	}
 }
@@ -158,6 +164,7 @@ void MenuUtama() {
 			//Menampilkan routing
 		} else if (inputMode == 4) {
 			//Melakukan routing manual
+			RoutingManual();
 		} else if (inputMode == 5) {
 			//Melakukan layouting otomatis
 		} else if (inputMode == 6) {
