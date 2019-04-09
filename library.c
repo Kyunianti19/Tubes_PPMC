@@ -173,6 +173,7 @@ void MenuUtama() {
 			//Melakukan design rule checker
 		} else if (inputMode == 8) {
 			//Simpan proyek
+			SaveProject();
 		}
 		printf ("\n");
 	} while (inputMode!=8);
@@ -469,27 +470,36 @@ void RoutingManual(){
 			route[s][k][1] = tempx; route[s][k][3] = x;
 			route[s][k][2] = tempy; route[s][k][4] = y;
 			
-			if (Hitungjarak(x-tempx,y-tempy)<=2) {
-				strcpy(varRouting.simbol[x][y], &simb);
+			if (Hitungjarak(x-tempx,y-tempy)<=1) {
+				//strcpy(varRouting.simbol[x][y], &simb);
+				varRouting.simbol[x-1][j-1][0] = simb;
+				varRouting.simbol[x-1][j-1][0] = simb;	
 			}else{
 				if (x==tempx){
 					if (tempy<=y) {
-						for (j=tempy+1;j<=y; j++){
-							strcpy(varRouting.simbol[x][j], &simb);							
+						for (j=tempy;j<=y; j++){
+							varRouting.simbol[x-1][j-1][0] = simb;		
+							printf ("%s\n", varRouting.simbol[x][j]); //Debug				
 						}
 					} else if (y<tempy){
-						for (j=y+1;j<=tempy;j++){
-							strcpy(varRouting.simbol[x][j], &simb);
+						for (j=y;j<=tempy;j++){
+							//strcpy(varRouting.simbol[x][j], &simb);
+							varRouting.simbol[x-1][j-1][0] = simb;
+							printf ("%s\n", varRouting.simbol[x][j]); //Debug	
 						}
 					}
 				} else if (y==tempy){
 					if (tempx<=x) {
-						for (i=tempx+1;i<=x; i++){
-							strcpy(varRouting.simbol[i][y], &simb);
+						for (i=tempx;i<=x; i++){
+							//strcpy(varRouting.simbol[i][y], &simb);
+							varRouting.simbol[x-1][j-1][0] = simb;
+							printf ("%s\n", varRouting.simbol[x][j]); //Debug	
 						}
 					} else if (x<tempx){
-						for (i=x+1;i<=tempx;i++){
-							strcpy(varRouting.simbol[i][y], &simb);	
+						for (i=x;i<=tempx;i++){
+							//strcpy(varRouting.simbol[i][y], &simb);
+							varRouting.simbol[x-1][j-1][0] = simb;
+							printf ("%s\n", varRouting.simbol[x][j]);	//Debug	
 						}
 					}
 				}
@@ -704,11 +714,6 @@ void designRuleChecker(component part[3][5]){
 
 <<<<<<< HEAD
 */
-=======
-		
->>>>>>> 2526d7ef03747c732094d2050a403f1786f94184
-								
-
 
 // Prosedur menyimpan kembali variabel ke dalam file eksternalnya
 // Jangan lupa buka file untuk di-write lalu tutup file-nya
