@@ -533,26 +533,31 @@ component part[3][5];
 
 void designRuleChecker(component part[3][5]){
 		
-		int r = 1, c = 3; 
-		char *arr = (char *)malloc(r * c * sizeof(int)); 	  
+		int r = 1, c = 1; 
+		char **arr = malloc(sizeof(char*)*r); 
+		char baca[100];	  
 		FILE *drc;
 		drc = fopen("DRC.txt","r");
-		cha = fgetc(drc); 
-		int i =0,j=0;
-		while (cha != EOF) {
-			if ( cha!='\n') {
-				if ( cha != ' ') {
-					fscanf(drc,"%c", &arr[i][j]);
-					cha = fgetc(drc);
-					j++;}}
-			else {
-				i++;
-				r++;
-				arr = (char *)realloc(arr,r * c * sizeof(int));	}}
+		
+		int q=0;
+		while(!feof(drc)) {
+			fgets(baca,100,drc);
+			for (int i=0;i<strlen(baca);i++){
+				 if(baca[i] !=' '){
+					 arr[c-1] = malloc(sizeof((char)*c));
+					 arr[c-1][i] = baca[i];
+				 }
+				 c++;
+				 arr[c-1] = realloc(arr[c-1], sizeof(char)*c);
+			 }
+			 r++;
+			 arr = realloc(arr, sizeof(char)*r);
+		}
+						
 		int max = 40;		
 		int designcek = 0;
 		int cekkoordinat = 0;
-		for (int i = 1; i<=max;i++){
+		for (int i = 1; i<=3;i++){
 			for (int j =1;j<=max;j++){
 				for (int k = 1;k<=max;k++){
 					for (int l = 1;l<=2;l++){
@@ -560,35 +565,34 @@ void designRuleChecker(component part[3][5]){
 							if (part[i-1][j].point[k-1].lokasi[l-1].kaki[m] == part[i][j].point[k].lokasi[l].kaki[m]){
 								cekkoordinat++;
 							}
-							if (cekkoordinat ==2){
-							  
-								for (int n = 1;n<=r;n++){
-									if (arr[n][1] == arr[n-1][1] || arr[n][2] == arr[n-1][2]) {
-										if (arr[n][0] == 'Cb' && i ==1 && j==1){
+							if (cekkoordinat ==2){							  
+								for (int n = 1;n<=max;n++){
+									if (arr[n][2] == arr[n-1][2] || arr[n][3] == arr[n-1][3]) {
+										if (arr[n][0] == 'C' && arr[n][1] == 'b' && i ==1 && j==1){
 											designcek++
 										}
-										else if (arr[n][0] == 'Cc' && i ==1 && j==2){
+										else if (arr[n][0] == 'C' && arr[n][1] == 'c' && i ==1 && j==2){
 											designcek++
 										}
-										else if (arr[n][0] == 'Ce' && i ==1 && j==3){
+										else if (arr[n][0] == 'C' && arr[n][1] == 'e' &&i ==1 && j==3){
 											designcek++
 										}
-										else if (arr[n][0] == 'R1' && i ==2 && j==1){
+										else if (arr[n][0] == 'R' && arr[n][1] == '1' && i ==2 && j==1){
 											designcek++
 										}
-										else if (arr[n][0] == 'R2' && i ==2 && j==2){
+										else if (arr[n][0] == 'R' && arr[n][1] == '2' && i ==2 && j==2){
 											designcek++
 										}
-										else if (arr[n][0] == 'RC' && i ==2 && j==3){
+										else if (arr[n][0] == 'R' && arr[n][1] == 'c' &&i ==2 && j==3){
 											designcek++
 										}
-										else if (arr[n][0] == 'Re' && i ==2 && j==4){
+										else if (arr[n][0] == 'R' && arr[n][1] == 'e' &&i ==2 && j==4){
 											designcek++
 										}
-										else if (arr[n][0] == 'J1' && i ==3 && j==1){
+										else if (arr[n][0] == 'J' && arr[n][1] == '1' && i ==3 && j==1){
 											designcek++
 										}
-										else if (arr[n][0] == 'J2' && i ==3 && j==2){
+										else if (arr[n][0] == 'J' && arr[n][1] == '2' && i ==3 && j==2){
 											designcek++
 										}
 										else {
@@ -669,7 +673,6 @@ void designRuleChecker(component part[3][5]){
 			}
 		}
 	}
-}
 }
 }
 		
