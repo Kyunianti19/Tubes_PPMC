@@ -102,18 +102,19 @@ int LoadProject() {
 		for (i=0; i<41; i++) {
 			fgets(fileLine[i], 200, fileLayout);
 		}
+		//printf("Ambil selesai\n"); //Debug
 		token = strtok(fileLine[0], ","); varLayout.colNeff = atoi(token);
 		token = strtok(NULL, "\n"); varLayout.rowNeff = atoi(token);
 		for (i=1; i<varLayout.rowNeff+1; i++) {
 			j = 0;
 			token = strtok(fileLine[i], ",");
-			strcpy (varLayout.simbol[i-1][j], token); //printf ("Ini :%sspasi\n", varLayout.simbol[i-1][j]); //Debug
+			strcpy (varLayout.simbol[i-1][j], token);// printf ("Ini %d:%s\n", j, varLayout.simbol[i-1][j]); //Debug
 			for (j=1; j<varLayout.colNeff-1; j++) {
 				token = strtok(NULL, ",");
-				strcpy (varLayout.simbol[i-1][j], token); //printf ("Ini :%sspasi\n", varLayout.simbol[i-1][j]); //Debug
+				strcpy (varLayout.simbol[i-1][j], token);// printf ("Ini %d:%s\n", j, varLayout.simbol[i-1][j]); //Debug
 			}
 			token = strtok(NULL, "\n");
-			strcpy (varLayout.simbol[i-1][j], token); //printf ("Ini :%sspasi\n", varLayout.simbol[i-1][j]); //Debug
+			strcpy (varLayout.simbol[i-1][j], token);// printf ("Ini %d:%s\n", j, varLayout.simbol[i-1][j]); //Debug
 		}
 		// Memasukkan data fileRouting ke dalam variabel varRouting
 		for (i=0; i<41; i++) {
@@ -158,10 +159,13 @@ void MenuUtama() {
 			printf ("Pilihan mode tidak ada. Masukan ulang!\n");
 		} else if (inputMode == 1) {
 			//Menampilkan layout
+			TampilkanLayout();
 		} else if (inputMode == 2) {
 			//Melakukan layouting manual
+			LayoutingManual();
 		} else if (inputMode == 3) {
 			//Menampilkan routing
+			TampilkanRouting();
 		} else if (inputMode == 4) {
 			//Melakukan routing manual
 			RoutingManual();
@@ -182,6 +186,16 @@ void MenuUtama() {
 // Prosedur menampilkan layout rangkaian PCB Dot Matriks
 void TampilkanLayout() {
     int i,j,k;
+    // printf("%d\n", varLayout.colNeff );// debug
+    // printf("%d\n", varLayout.rowNeff );// debug
+
+    for (i=0;i<varLayout.rowNeff;i++){
+        for (j=0; j<varLayout.colNeff; j++) {
+        	if (varLayout.simbol[i][j][0]!=' ') {
+        		strcpy(kompfix2[i+1][j+1].namkomp,varLayout.simbol[i][j]);
+        	}
+    	}
+    }
     printf(" ");
     for (i=1;i<=varLayout.colNeff;i++){
         printf("%d\t",i);}
@@ -192,15 +206,17 @@ void TampilkanLayout() {
             }
 
     }
-
+    // printf("ini col : %d\n", varLayout.colNeff );// debug
+    // printf("Ini row : %d\n", varLayout.rowNeff );// debug
 };
 
 // Prosedur melakukan layout manual : meminta input komponen dari user
 void LayoutingManual(){
-	int max1, max2;
-
-	printf("[Mode Layout]\nIsi `q` atau `Q` untuk kembali ke menu\n");
-	do {
+	int i, j;
+	int validasiOut = 1; 
+    int valid =1;
+ printf("[Mode Layout]\nIsi q atau Q untuk kembali ke menu\n");
+ do {
         printf("Pilih Komponen (R,C,T,J): ");
         scanf("%s", (tempkom2.komp));
         //validasi apabila input salah
@@ -209,7 +225,7 @@ void LayoutingManual(){
         valid = 0;}
 
         while (valid==1){
-			printf("Ulangi input komponen, komponen tidak tersedia\n");
+   printf("Ulangi input komponen, komponen tidak tersedia\n");
             printf("Pilih Komponen (R,C,T,J): ");
             scanf("%s", (tempkom2.komp));
             if ((tempkom2.komp[0] == 'R')||(tempkom2.komp[0]=='T')||(tempkom2.komp[0]=='C')||
@@ -256,7 +272,7 @@ void LayoutingManual(){
                         strcpy (kompfix2[tempkom2.koor1.x][tempkom2.koor1.y].namkomp,tempkom2.komp);
                         strcpy (kompfix2[tempkom2.koor2.x][tempkom2.koor2.y].namkomp,tempkom2.komp);
                     } else {
-                        printf("peletakan komponen salah, jarak minimum antar kaki kapasitor yaitu 1 lubang");
+                        printf("peletakan komponen salah, jarak minimum antar kaki kapasitor yaitu 1 lubang\n");
                     }
                 }
             }
@@ -269,12 +285,6 @@ void LayoutingManual(){
                 if ((tempkom2.koor1.x<=varLayout.colNeff)&&(tempkom2.koor1.y<=varLayout.rowNeff)){
                     printf("Koordinat Kaki 2 : ");
                     scanf("%d,%d",(&tempkom2.koor2.x),(&tempkom2.koor2.y));
-                    if (max1<=tempkom2.koor2.x){
-                        max1=tempkom2.koor2.x;
-                    }
-                    if (max2<=tempkom2.koor2.y){
-                        max2 = tempkom2.koor2.y;
-                    }
                     if ((kompfix2[tempkom2.koor1.x][tempkom2.koor1.y].namkomp[0] == '\0')&& //validasi posisi kosong
                         (kompfix2[tempkom2.koor2.x][tempkom2.koor2.y].namkomp[0] == '\0'))
                         //lupa validasi letak komponen sebelumnya yg udh dimasukin
@@ -282,7 +292,7 @@ void LayoutingManual(){
                         strcpy(kompfix2[tempkom2.koor1.x][tempkom2.koor1.y].namkomp,tempkom2.komp);
                         strcpy(kompfix2[tempkom2.koor2.x][tempkom2.koor2.y].namkomp,tempkom2.komp);
                     } else {
-                        printf("peletakan komponen salah, koordinat sudah terisi");
+                        printf("peletakan komponen salah, koordinat sudah terisi\n");
                     }
                 }
         }
@@ -290,7 +300,7 @@ void LayoutingManual(){
         //bila input transistor
                 if (tempkom2.komp[0]=='T'){
                 printf("Koordinat Kaki 1 : ");
-                scanf("%d,%d",(&tempkom3.koor1.x),(&tempkom3.koor3.y));
+                scanf("%d,%d",(&tempkom3.koor1.x),(&tempkom3.koor1.y));
                 if ((tempkom3.koor1.x<=varLayout.colNeff)&&(tempkom3.koor1.y<=varLayout.rowNeff)){
                     printf("Koordinat Kaki 2 : ");
                     scanf("%d,%d",(&tempkom3.koor2.x),(&tempkom3.koor2.y));
@@ -303,49 +313,81 @@ void LayoutingManual(){
                                  (kompfix2[tempkom3.koor3.x][tempkom3.koor3.y].namkomp[0] == '\0'))&&
                                 ((abs(tempkom3.koor1.x - tempkom3.koor2.x) >= 1 )|| //validasi jarak antar kaki
                                  (abs(tempkom3.koor2.x - tempkom3.koor3.x) >= 1 )||
+                                 (abs(tempkom3.koor3.x - tempkom3.koor1.x) >= 1 )||
                                  (abs(tempkom3.koor1.y - tempkom3.koor2.y) >= 1 )||
-                                 (abs(tempkom3.koor2.y - tempkom3.koor3.y) >=1 )))
+                                 (abs(tempkom3.koor2.y - tempkom3.koor3.y) >= 1 )||
+                                 (abs(tempkom3.koor3.y - tempkom3.koor1.y) >= 1 )))
                             {
                                 strcpy(kompfix2[tempkom3.koor1.x][tempkom3.koor1.y].namkomp,tempkom2.komp);
                                 strcpy(kompfix2[tempkom3.koor2.x][tempkom3.koor2.y].namkomp,tempkom2.komp);
                                 strcpy(kompfix2[tempkom3.koor3.x][tempkom3.koor3.y].namkomp,tempkom2.komp);
                             } else {
-                                printf("peletakan komponen salah, jarak minimum antar kaki transistor 1 lubang");
+                                printf("peletakan komponen salah, jarak minimum antar kaki transistor 1 lubang\n");
                             }
                         }
                     }
                 }
         }
+        // printf("%d\n", varLayout.colNeff ); //Debug
+        // printf("%d\n", varLayout.rowNeff ); //Debug
 
     //bila input q/Q (Quit)
     if ((tempkom2.komp[0]=='Q')||(tempkom2.komp[0]=='q')){
         validasiOut = 0;
     }
-	} while (validasiOut);
+
+ } while (validasiOut);
+
+    for (i=0;i<varLayout.rowNeff;i++){
+        for (j=0; j<varLayout.colNeff; j++) {
+        	if (kompfix2[i+1][j+1].namkomp[0]!='\0') {
+        		strcpy(varLayout.simbol[i][j],kompfix2[i+1][j+1].namkomp);
+        	}
+    	}
+    }
+
+    //printf("byeeee ! \n"); //NANDAIN MASUK SINI AJA.. HAPUS YAK NANTI
+ //MenuUtama();
 };
 	
-	
-/*
 // Prosedur menampilkan routing rangkaian PCB Dot Matriks
-void tampilkanRouting(char route[Rmax][Cmax]){
-		for (int i = 0; i <=Rmax; i++) {
-			for (int j = 0; j<=Cmax; j++){
-				if ( i==0){
-					for (int k = 1;k<=Cmax;k++){
-						if(k==Cmax){
-							printf("\n",k);}
-						else {
-							printf(" %d",k);}}							
-				else {
-					if ( j=0){
-						prinf("%d",i);}
-					else {
-						if (route[i-1][j-1] = NULL){
-							printf(" ");}
-						else {
-							printf("%c",route[i-1][j-1]); }}}}}}}
+void TampilkanRouting() {
+	int i, j, k;
 
-*/
+	printf("[Layout Rangkaian pada PCB Dot Matriks]\n");
+	for (i = 0; i <=varRouting.rowNeff; i++) {
+		for (j = 0; j <= varRouting.colNeff; j++) {
+			if (i==0 && j==0) {
+				printf("   ");
+				for (k = 1;k<=varRouting.colNeff;k++){
+					if(k==varRouting.colNeff) {
+						printf("%3d\n",k); 
+					}
+					else {
+						printf("%3d",k);
+					}
+				}
+				//printf("Sesuatu"); //Debug
+			}							
+			else {
+				//printf("%d", j); //Debug
+				if ( j==0) {
+					printf("%3d",i);
+				}
+				else if (i>0) {
+					// if (varRouting.simbol[i-1][j-1] = NULL) {
+					// 	printf(" ");
+					// }
+					// else {
+					printf("%3c",varRouting.simbol[i-1][j-1][0]); 
+					// }
+				}
+			}
+		}
+		printf("\n");
+	}
+}
+
 	
 // Prosedur melakukan routing manual : meminta input sambungan simpul/node dari user (memilih simbol juga)
 void RoutingManual(){
@@ -636,6 +678,8 @@ void SaveProject(){
 	// Inisiasi file Layout dan Routing, agar formatnya benar
 	fprintf (fileLayout, "%d,%d\n", varLayout.colNeff, varLayout.rowNeff);
 	fprintf (fileRouting, "%d,%d\n", varRouting.colNeff, varRouting.rowNeff);
+	// printf("%d\n", varLayout.colNeff ); //Debug
+ //    printf("%d\n", varLayout.rowNeff ); //Debug
 	
 	for (i=0; i<varLayout.rowNeff; i++) {
 		for (j=0; j<varLayout.colNeff-1; j++) {

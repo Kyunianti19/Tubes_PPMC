@@ -76,10 +76,10 @@ arrayPCB varLayout, varRouting;
 int route[30][160][5];
 
 //variabel untuk layout 
-int valid=1, validasiOut=1;
+int valid=1, validasiOut = 1;
 komponen2kaki tempkom2;
 komponen3kaki tempkom3;
-kompfix kompfix2 [40][40];
+kompfix kompfix2 [41][41];
 
 /* -----LIST FUNGSI----- */
 // Prosedur untuk membuat proyek baru, meminta input nama proyek dan ukuran PCB
