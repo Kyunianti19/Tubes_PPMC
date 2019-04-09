@@ -197,6 +197,8 @@ void TampilkanLayout() {
 
 // Prosedur melakukan layout manual : meminta input komponen dari user
 void LayoutingManual(){
+	int max1, max2;
+
 	printf("[Mode Layout]\nIsi `q` atau `Q` untuk kembali ke menu\n");
 	do {
         printf("Pilih Komponen (R,C,T,J): ");
@@ -378,37 +380,36 @@ void RoutingManual(){
 			route[s][k][0] = simb;
 			route[s][k][1] = tempx; route[s][k][3] = x;
 			route[s][k][2] = tempy; route[s][k][4] = y;
+
+			if(tempx==0 && tempy==0) {
+				varRouting.simbol[x-1][y-1][0] = simb;
+			}
 			
 			if (Hitungjarak(x-tempx,y-tempy)<=1) {
-				//strcpy(varRouting.simbol[x][y], &simb);
-				varRouting.simbol[x-1][j-1][0] = simb;
-				varRouting.simbol[x-1][j-1][0] = simb;	
+				varRouting.simbol[x-1][y-1][0] = simb;	
 			}else{
 				if (x==tempx){
 					if (tempy<=y) {
 						for (j=tempy;j<=y; j++){
 							varRouting.simbol[x-1][j-1][0] = simb;		
-							printf ("%s\n", varRouting.simbol[x][j]); //Debug				
+							//printf ("%s\n", varRouting.simbol[x][j]); //Debug				
 						}
 					} else if (y<tempy){
 						for (j=y;j<=tempy;j++){
-							//strcpy(varRouting.simbol[x][j], &simb);
 							varRouting.simbol[x-1][j-1][0] = simb;
-							printf ("%s\n", varRouting.simbol[x][j]); //Debug	
+							//printf ("%s\n", varRouting.simbol[x][j]); //Debug	
 						}
 					}
 				} else if (y==tempy){
 					if (tempx<=x) {
 						for (i=tempx;i<=x; i++){
-							//strcpy(varRouting.simbol[i][y], &simb);
-							varRouting.simbol[x-1][j-1][0] = simb;
-							printf ("%s\n", varRouting.simbol[x][j]); //Debug	
+							varRouting.simbol[i-1][y-1][0] = simb;
+							//printf ("%s\n", varRouting.simbol[x][j]); //Debug	
 						}
 					} else if (x<tempx){
 						for (i=x;i<=tempx;i++){
-							//strcpy(varRouting.simbol[i][y], &simb);
-							varRouting.simbol[x-1][j-1][0] = simb;
-							printf ("%s\n", varRouting.simbol[x][j]);	//Debug	
+							varRouting.simbol[i-1][y-1][0] = simb;
+							//printf ("%s\n", varRouting.simbol[x][j]);	//Debug	
 						}
 					}
 				}
@@ -416,7 +417,8 @@ void RoutingManual(){
 
 			tempy=y;
 			tempx=x;
-			printf("Kordinat %d: ",k++);
+			k++;
+			printf("Kordinat %d: ",k);
 			scanf("%s",&koord);
 
 		}
