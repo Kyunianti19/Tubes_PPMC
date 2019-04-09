@@ -215,6 +215,7 @@ void LayoutingManual(){
 	int i, j;
 	int validasiOut = 1; 
     int valid =1;
+
  printf("[Mode Layout]\nIsi q atau Q untuk kembali ke menu\n");
  do {
         printf("Pilih Komponen (R,C,T,J): ");
@@ -238,23 +239,31 @@ void LayoutingManual(){
         if (tempkom2.komp[0]=='R'){
                 printf("Koordinat Kaki 1 : ");
                 scanf("%d,%d",(&tempkom2.koor1.x),(&tempkom2.koor1.y));
-                if ((tempkom2.koor1.x<=varLayout.colNeff)&&(tempkom2.koor1.y<=varLayout.rowNeff)){
-                    printf("Koordinat Kaki 2 : ");
-                    scanf("%d,%d",(&tempkom2.koor2.x),(&tempkom2.koor2.y));
-                    if ((tempkom2.koor2.x<=varLayout.colNeff)&&(tempkom2.koor2.y<=varLayout.rowNeff)) {
-                        if (((kompfix2[tempkom2.koor1.x][tempkom2.koor1.y].namkomp[0] == '\0')&& //validasi posisi kosong
-                             (kompfix2[tempkom2.koor2.x][tempkom2.koor2.y].namkomp[0] == '\0'))&&
-                            ((abs(tempkom2.koor1.x - tempkom2.koor2.x) >= 3 )|| //validasi jarak antar komponen benar
-                             (abs(tempkom2.koor1.y - tempkom2.koor2.y) >= 3 )))
-                        {
-                            strcpy((kompfix2[tempkom2.koor1.x][tempkom2.koor1.y].namkomp),(tempkom2.komp)) ;
-                            strcpy((kompfix2[tempkom2.koor2.x][tempkom2.koor2.y].namkomp),(tempkom2.komp)) ;
-                        } else {
-                            printf("peletakan komponen salah, jarak minimum antar kaki resistor yaitu 3 lubang/ sudah terdapat komponen\n");
-                        }
-                    }
+                if (max1<=tempkom2.koor1.x){
+                    max1=tempkom2.koor1.x;
                 }
-            }
+                if (max2<=tempkom2.koor1.y){
+                    max2 = tempkom2.koor1.y;
+                }
+                printf("Koordinat Kaki 2 : ");
+                scanf("%d,%d",(&tempkom2.koor2.x),(&tempkom2.koor2.y));
+                if (max1<=tempkom2.koor2.x){
+                    max1=tempkom2.koor2.x;
+                }
+                if (max2<=tempkom2.koor2.y){
+                    max2 = tempkom2.koor2.y;
+                }
+                if (((kompfix2[tempkom2.koor1.x][tempkom2.koor1.y].namkomp[0] == '\0')&& //validasi posisi kosong
+                     (kompfix2[tempkom2.koor2.x][tempkom2.koor2.y].namkomp[0] == '\0'))&&
+                    ((abs(tempkom2.koor1.x - tempkom2.koor2.x) >= 3 )|| //validasi jarak antar komponen benar
+                     (abs(tempkom2.koor1.y - tempkom2.koor2.y) >= 3 )))
+                {
+                    strcpy((kompfix2[tempkom2.koor1.x][tempkom2.koor1.y].namkomp),(tempkom2.komp)) ;
+                    strcpy((kompfix2[tempkom2.koor2.x][tempkom2.koor2.y].namkomp),(tempkom2.komp)) ;
+                } else {
+                    printf("peletakan komponen salah, jarak minimum antar kaki resistor yaitu 3 lubang/ sudah terdapat komponen\n");
+                }
+        }
 
         //bila input kapasitor
         if (tempkom2.komp[0]=='C'){
@@ -274,8 +283,30 @@ void LayoutingManual(){
                     } else {
                         printf("peletakan komponen salah, jarak minimum antar kaki kapasitor yaitu 1 lubang\n");
                     }
+                if (max1<=tempkom2.koor1.x){
+                    max1=tempkom2.koor1.x;
                 }
-            }
+                if (max2<=tempkom2.koor1.y){
+                    max2 = tempkom2.koor1.y;
+                }
+                printf("Koordinat Kaki 2 : ");
+                scanf("%d,%d",(&tempkom2.koor2.x),(&tempkom2.koor2.y));
+                if (max1<=tempkom2.koor2.x){
+                    max1=tempkom2.koor2.x;
+                }
+                if (max2<=tempkom2.koor2.y){
+                    max2 = tempkom2.koor2.y;
+                }
+                if (((kompfix2[tempkom2.koor1.x][tempkom2.koor1.y].namkomp[0] == '\0')&& //validasi posisi kosong
+                     (kompfix2[tempkom2.koor2.x][tempkom2.koor2.y].namkomp[0] == '\0'))&&
+                    ((abs(tempkom2.koor1.x - tempkom2.koor2.x) >= 1 )|| //validasi jarak antar komponen benar
+                     (abs(tempkom2.koor1.y - tempkom2.koor2.y) >= 1 )))
+                {
+                    strcpy (kompfix2[tempkom2.koor1.x][tempkom2.koor1.y].namkomp,tempkom2.komp);
+                    strcpy (kompfix2[tempkom2.koor2.x][tempkom2.koor2.y].namkomp,tempkom2.komp);
+                } else {
+                    printf("peletakan komponen salah, jarak minimum antar kaki kapasitor yaitu 1 lubang");
+                }
         }
 
         //bila input jumper
@@ -294,6 +325,28 @@ void LayoutingManual(){
                     } else {
                         printf("peletakan komponen salah, koordinat sudah terisi\n");
                     }
+                if (max1<=tempkom2.koor1.x){
+                    max1=tempkom2.koor1.x;
+                }
+                if (max2<=tempkom2.koor1.y){
+                    max2 = tempkom2.koor1.y;
+                }
+                printf("Koordinat Kaki 2 : ");
+                scanf("%d,%d",(&tempkom2.koor2.x),(&tempkom2.koor2.y));
+                if (max1<=tempkom2.koor2.x){
+                    max1=tempkom2.koor2.x;
+                }
+                if (max2<=tempkom2.koor2.y){
+                    max2 = tempkom2.koor2.y;
+                }
+                if ((kompfix2[tempkom2.koor1.x][tempkom2.koor1.y].namkomp[0] == '\0')&& //validasi posisi kosong
+                    (kompfix2[tempkom2.koor2.x][tempkom2.koor2.y].namkomp[0] == '\0'))
+                    //lupa validasi letak komponen sebelumnya yg udh dimasukin
+                {
+                    strcpy(kompfix2[tempkom2.koor1.x][tempkom2.koor1.y].namkomp,tempkom2.komp);
+                    strcpy(kompfix2[tempkom2.koor2.x][tempkom2.koor2.y].namkomp,tempkom2.komp);
+                } else {
+                    printf("peletakan komponen salah, koordinat sudah terisi");
                 }
         }
 
@@ -331,6 +384,44 @@ void LayoutingManual(){
         // printf("%d\n", varLayout.colNeff ); //Debug
         // printf("%d\n", varLayout.rowNeff ); //Debug
 
+                scanf("%d,%d",(&tempkom3.koor1.x),(&tempkom3.koor3.y));
+                if (max1<=tempkom3.koor1.x){
+                    max1=tempkom3.koor1.x;
+                }
+                if (max2<=tempkom3.koor1.y){
+                    max2 = tempkom3.koor1.y;
+                }
+                printf("Koordinat Kaki 2 : ");
+                scanf("%d,%d",(&tempkom3.koor2.x),(&tempkom3.koor2.y));
+                if (max1<=tempkom3.koor2.x){
+                    max1=tempkom3.koor2.x;
+                }
+                if (max2<=tempkom3.koor2.y){
+                    max2 = tempkom3.koor2.y;
+                }
+                printf("Koordinat Kaki 3 : ");
+                scanf("%d,%d",(&tempkom3.koor3.x),(&tempkom3.koor3.y));
+                if (max1<=tempkom3.koor3.x){
+                    max1=tempkom3.koor3.x;
+                }
+                if (max2<=tempkom3.koor3.y){
+                    max2 = tempkom3.koor3.y;
+                }
+                if (((kompfix2[tempkom3.koor1.x][tempkom3.koor1.y].namkomp[0] == '\0')&& //validasi posisi kosong
+                     (kompfix2[tempkom3.koor2.x][tempkom3.koor2.y].namkomp[0] == '\0')&&
+                     (kompfix2[tempkom3.koor3.x][tempkom3.koor3.y].namkomp[0] == '\0'))&&
+                    ((abs(tempkom3.koor1.x - tempkom3.koor2.x) >= 1 )|| //validasi jarak antar kaki
+                     (abs(tempkom3.koor2.x - tempkom3.koor3.x) >= 1 )||
+                     (abs(tempkom3.koor1.y - tempkom3.koor2.y) >= 1 )||
+                     (abs(tempkom3.koor2.y - tempkom3.koor3.y) >=1 )))
+                {
+                    strcpy(kompfix2[tempkom3.koor1.x][tempkom3.koor1.y].namkomp,tempkom2.komp);
+                    strcpy(kompfix2[tempkom3.koor2.x][tempkom3.koor2.y].namkomp,tempkom2.komp);
+                    strcpy(kompfix2[tempkom3.koor3.x][tempkom3.koor3.y].namkomp,tempkom2.komp);
+                } else {
+                    printf("peletakan komponen salah, jarak minimum antar kaki transistor 1 lubang");
+                }
+        }
     //bila input q/Q (Quit)
     if ((tempkom2.komp[0]=='Q')||(tempkom2.komp[0]=='q')){
         validasiOut = 0;
@@ -347,9 +438,10 @@ void LayoutingManual(){
     }
 
     //printf("byeeee ! \n"); //NANDAIN MASUK SINI AJA.. HAPUS YAK NANTI
- //MenuUtama();
+    //printf("loop hehe\n"); //NANDAIN MASUK SINI AJA.. HAPUS YAK NANTI
 };
-	
+
+
 // Prosedur menampilkan routing rangkaian PCB Dot Matriks
 void TampilkanRouting() {
 	int i, j, k;
@@ -387,7 +479,6 @@ void TampilkanRouting() {
 		printf("\n");
 	}
 }
-
 	
 // Prosedur melakukan routing manual : meminta input sambungan simpul/node dari user (memilih simbol juga)
 void RoutingManual(){
@@ -404,54 +495,45 @@ void RoutingManual(){
 	printf("Isi `q` atau `Q` untuk kembali ke menu\n");
 	printf("Isi `n` atau `N` untuk memulai pada simpul (node) baru\n");
 	do {
+		printf("Pilih Simbol (!,@,#,$,%,^,&,*,(,)): ");
+		scanf("%c",&simb);
 		k=1; s=1;
-		do {
-			printf("\nPilih Simbol (!,@,#,$,%,^,&,*,(,)): ");
-			scanf(" %c",&simb);
-			if (simb!='!'&&simb!='@'&&simb!='#'&&simb!='$'&&simb!='%'&&simb!='^'&&simb!='&'&&simb!='*'&&simb!=','){
-				printf("Ulangi input simbol, simbol salah\n");
-			}
-		} while (simb!='!'&&simb!='@'&&simb!='#'&&simb!='$'&&simb!='%'&&simb!='^'&&simb!='&'&&simb!='*'&&simb!=',');
-			
+		while (simb !='!'||simb !='@'||simb !='#'||simb !='$'||simb !='%'||simb !='^'||simb !='&'||simb !='*'||simb !=','){
+			printf("Ulangi input simbol, simbol salah\n");
+			printf("Pilih Simbol (!,@,#,$,%,^,&,*,(,)): ");
+			scanf("%c",&simb);
+		}
 
 		printf("Kordinat %d: ",k);
 		scanf("%s",&koord);
-		while ((strcmp(koord,"q")!=0)&&(strcmp(koord,"Q")!=0)&&(strcmp(koord,"n")!=0)&&(strcmp(koord,"N")!=0)){
+		while ((koord!='q'||koord!='Q')&&(koord!='n'||koord!='N')){
 			token = strtok(koord,","); x=atoi(token); 
-			token = strtok(NULL,""); y=atoi(token);
+			token = strtok(NULL,"\n"); y=atoi(token);
 			route[s][k][0] = simb;
 			route[s][k][1] = tempx; route[s][k][3] = x;
 			route[s][k][2] = tempy; route[s][k][4] = y;
-
-			if(tempx==0 && tempy==0) {
-				varRouting.simbol[x-1][y-1][0] = simb;
-			}
 			
-			if (Hitungjarak(x-tempx,y-tempy)<=1) {
-				varRouting.simbol[x-1][y-1][0] = simb;	
+			if (Hitungjarak(x-tempx,y-tempy)<=2) {
+				strcpy(varRouting.simbol[x][y], simb);
 			}else{
 				if (x==tempx){
 					if (tempy<=y) {
-						for (j=tempy;j<=y; j++){
-							varRouting.simbol[x-1][j-1][0] = simb;		
-							//printf ("%s\n", varRouting.simbol[x][j]); //Debug				
+						for (j=tempy+1;j<=y; j++){
+							strcpy(varRouting.simbol[x][j], simb);							
 						}
 					} else if (y<tempy){
-						for (j=y;j<=tempy;j++){
-							varRouting.simbol[x-1][j-1][0] = simb;
-							//printf ("%s\n", varRouting.simbol[x][j]); //Debug	
+						for (j=y+1;j<=tempy;j++){
+							strcpy(varRouting.simbol[x][j], simb);
 						}
 					}
 				} else if (y==tempy){
 					if (tempx<=x) {
-						for (i=tempx;i<=x; i++){
-							varRouting.simbol[i-1][y-1][0] = simb;
-							//printf ("%s\n", varRouting.simbol[x][j]); //Debug	
+						for (i=tempx+1;i<=x; i++){
+							strcpy(varRouting.simbol[i][y], simb);
 						}
 					} else if (x<tempx){
-						for (i=x;i<=tempx;i++){
-							varRouting.simbol[i-1][y-1][0] = simb;
-							//printf ("%s\n", varRouting.simbol[x][j]);	//Debug	
+						for (i=x+1;i<=tempx;i++){
+							strcpy(varRouting.simbol[i][y], simb);	
 						}
 					}
 				}
@@ -459,15 +541,15 @@ void RoutingManual(){
 
 			tempy=y;
 			tempx=x;
-			k++;
-			printf("Kordinat %d: ",k);
+			printf("Kordinat %d: ",k++);
 			scanf("%s",&koord);
 
 		}
 		s++;
-	
-	} while (strcmp(koord,"n")==0||strcmp(koord,"N")==0);
-	
+
+	} while (koord=='n'||koord=='N');
+
+	MenuUtama();	
 }
 
 // Prosedur melakukan layout otomatis
@@ -499,31 +581,34 @@ typedef struct komponen {
 } component;
 
 component part[3][5];
-/*
+
 void designRuleChecker(component part[3][5]){
 		
 		int r = 1, c = 1; 
 		char **arr = malloc(sizeof(char*)*r); 
-		char baca[100];	  
+		char baca[150];	  
 		FILE *drc;
 		drc = fopen("DRC.txt","r");
-		
+		fgets(baca,150,drc);
+		int q =1;
 		
 		while(!feof(drc)) {
-			fgets(baca,100,drc);
+			
 			puts(baca);
 			for (int i=0;i<strlen(baca);i++){
 				 if(baca[i] !=' '){
-					 arr[c-1] = malloc(sizeof(char)*c);
-					 arr[c-1][i] = baca[i];
-					
+					 arr[c-1] = malloc(sizeof(char)*q);
+					 arr[c-1][i] = baca[i];					
 				 }
-				 c++;
-				 arr[c-1] = realloc(arr[c-1],sizeof(char)*c);
-				 
+				 printf("%c\n",arr[c-1][i]);
+				 q++;
+				 arr[c-1] = realloc(arr[c-1],sizeof(char*)*q);
 			 }
+			 
 			 r++;
-			 arr = realloc(arr, sizeof(char)*r);
+			 c++;
+			 arr = realloc(arr, sizeof(char*)*r);
+			 fgets(baca,150,drc);
 			
 		}
 		fclose(drc);
@@ -531,7 +616,7 @@ void designRuleChecker(component part[3][5]){
 		
 	
 		char cekT ={' '};
-		int max = 40;		
+		int max = 7;		
 		int designcek = 0;
 		int cekkoordinat = 0;
 		for (int i = 1; i<=3;i++){
@@ -553,7 +638,7 @@ void designRuleChecker(component part[3][5]){
 							}
 							if (cekkoordinat ==2){							  
 								for (int n = 1;n<=max;n++){
-									if (arr[n][2] == arr[n-1][2] || arr[n][3] == arr[n-1][3]) {
+									if (arr[n][4] == arr[n-1][4] || arr[n][3] == arr[n-1][3]) {
 										if (arr[n][0] == 'C' && arr[n][1] == 'b' && i ==1 && j==1 && cekT =='B'){
 											designcek++;
 										}
@@ -584,33 +669,33 @@ void designRuleChecker(component part[3][5]){
 										else {
 											if( i ==1){
 												if (j==1){
-													printf("ERROR! Kaki %c terhubung dengan Kaki %s ",arr[n][0],"Cb");
+													printf("ERROR! Kaki %c terhubung dengan Kaki %s \n",arr[n][0],"Cb");
 												}
 												else if (j==2){
-													printf("ERROR! Kaki %c terhubung dengan Kaki %s ",arr[n][0],"Cc");
+													printf("ERROR! Kaki %c terhubung dengan Kaki %s \n",arr[n][0],"Cc");
 												}
 												else if (j==3){
-													printf("ERROR! Kaki %c terhubung dengan Kaki %s ",arr[n][0],"Ce");
+													printf("ERROR! Kaki %c terhubung dengan Kaki %s \n",arr[n][0],"Ce");
 												}
 											else if(i==2){
 												if (j==1){
-													printf("ERROR! Kaki %c terhubung dengan Kaki %s ",arr[n][0],"R1");
+													printf("ERROR! Kaki %c terhubung dengan Kaki %s \n",arr[n][0],"R1");
 												}
 												else if (j==2){
-													printf("ERROR! Kaki %c terhubung dengan Kaki %s ",arr[n][0],"R2");
+													printf("ERROR! Kaki %c terhubung dengan Kaki %s \n",arr[n][0],"R2");
 												}
 												else if (j==3){
-													printf("ERROR! Kaki %c terhubung dengan Kaki %s ",arr[n][0],"Rc");
+													printf("ERROR! Kaki %c terhubung dengan Kaki %s \n",arr[n][0],"Rc");
 												}
 												else if (j==4){
-													printf("ERROR! Kaki %c terhubung dengan Kaki %s ",arr[n][0],"Re");
+													printf("ERROR! Kaki %c terhubung dengan Kaki %s \n",arr[n][0],"Re");
 												}
 											else if(i==3){
 												if (j==1){
-													printf("ERROR! Kaki %c terhubung dengan Kaki %s ",arr[n][0],"Ji");
+													printf("ERROR! Kaki %c terhubung dengan Kaki %s \n",arr[n][0],"Ji");
 												}
 												else if (j==2){
-													printf("ERROR! Kaki %c terhubung dengan Kaki %s ",arr[n][0],"Jo");
+													printf("ERROR! Kaki %c terhubung dengan Kaki %s \n",arr[n][0],"Jo");
 												}
 												
 											}
@@ -624,35 +709,35 @@ void designRuleChecker(component part[3][5]){
 			else {
 				if( i ==1){
 					if (j==1){
-						printf("ERROR! Kaki %c tidak terhubung dengan Kaki %s ",arr[j][0],"Cb");
+						printf("ERROR! Kaki %c tidak terhubung dengan Kaki %s \n",arr[j][0],"Cb");
 						}
 					else if (j==2){
-						printf("ERROR! Kaki %c tidak terhubung dengan Kaki %s ",arr[j][0],"Cc");
+						printf("ERROR! Kaki %c tidak terhubung dengan Kaki %s \n",arr[j][0],"Cc");
 						}
 					else if (j==3){
-						printf("ERROR! Kaki %c tidak terhubung dengan Kaki %s ",arr[j][0],"Ce");
+						printf("ERROR! Kaki %c tidak terhubung dengan Kaki %s \n",arr[j][0],"Ce");
 						}
 					}
 				else if(i==2){
 					if (j==1){
-						printf("ERROR! Kaki %c tidak terhubung dengan Kaki %s ",arr[j][0],"R1");
+						printf("ERROR! Kaki %c tidak terhubung dengan Kaki %s \n",arr[j][0],"R1");
 						}
 					else if (j==2){
-						printf("ERROR! Kaki %c tidak terhubung dengan Kaki %s ",arr[j][0],"R2");
+						printf("ERROR! Kaki %c tidak terhubung dengan Kaki %s \n",arr[j][0],"R2");
 						}
 					else if (j==3){
-						printf("ERROR! Kaki %c tidak terhubung dengan Kaki %s ",arr[j][0],"Rc");
+						printf("ERROR! Kaki %c tidak terhubung dengan Kaki %s \n",arr[j][0],"Rc");
 						}
 					else if (j==4){
-						printf("ERROR! Kaki %c tidak terhubung dengan Kaki %s ",arr[j][0],"Re");
+						printf("ERROR! Kaki %c tidak terhubung dengan Kaki %s \n",arr[j][0],"Re");
 					}
 					}
 				else if(i==3){
 					if (j==1){
-						printf("ERROR! Kaki %c tidak terhubung dengan Kaki %s ",arr[j][0],"Ji");
+						printf("ERROR! Kaki %c tidak terhubung dengan Kaki %s \n",arr[j][0],"Ji");
 						}
 					else if (j==2){
-						printf("ERROR! Kaki %c tidak terhubung dengan Kaki %s ",arr[j][0],"Jo");
+						printf("ERROR! Kaki %c tidak terhubung dengan Kaki %s \n",arr[j][0],"Jo");
 					}
 					}
 					}
@@ -664,14 +749,13 @@ void designRuleChecker(component part[3][5]){
 }
 }
 }
+		
+								
 
-<<<<<<< HEAD
-*/
 
 // Prosedur menyimpan kembali variabel ke dalam file eksternalnya
 // Jangan lupa buka file untuk di-write lalu tutup file-nya
 void SaveProject(){
-	int i,j;
 	fileLayout = fopen(filenameLayout, "w");
 	fileRouting = fopen(filenameRouting, "w");
 
@@ -681,8 +765,8 @@ void SaveProject(){
 	// printf("%d\n", varLayout.colNeff ); //Debug
  //    printf("%d\n", varLayout.rowNeff ); //Debug
 	
-	for (i=0; i<varLayout.rowNeff; i++) {
-		for (j=0; j<varLayout.colNeff-1; j++) {
+	for (int i=0; i<varLayout.rowNeff; i++) {
+		for (int j=0; j<varLayout.colNeff-1; j++) {
 			fprintf (fileLayout, "%s,", varLayout.simbol[i][j]);
 			fprintf (fileRouting, "%s,", varRouting.simbol[i][j]);
 		}
