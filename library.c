@@ -179,7 +179,7 @@ void LayoutingManual(){
 	int i,j,k;
 	
 };
-
+/*
 // Prosedur menampilkan routing rangkaian PCB Dot Matriks
 void tampilkanRouting(char route[Rmax][Cmax]){
 		for (int i = 0; i <=Rmax; i++) {
@@ -199,7 +199,7 @@ void tampilkanRouting(char route[Rmax][Cmax]){
 						else {
 							printf("%c",route[i-1][j-1]); }}}}}}}
 
-
+*/
 	
 // Prosedur melakukan routing manual : meminta input sambungan simpul/node dari user (memilih simbol juga)
 void RoutingManual(){
@@ -219,7 +219,7 @@ void RoutingManual(){
 		printf("Pilih Simbol (!,@,#,$,%,^,&,*,(,)): ");
 		scanf("%c",&simb);
 		k=1; s=1;
-		while (simb !='!'||simb !='@'||simb !='#'||simb !='$'||simb !='%'||simb !='^'||simb !='&'||simb !='*'||simb !=','){
+		while (strcmp(simb,'!')!=0||strcmp(simb,'@')!=0||strcmp(simb,'#')!=0||strcmp(simb,'$')!=0||strcmp(simb,'%')!=0||strcmp(simb,'^')!=0||strcmp(simb,'&')!=0||strcmp(simb,'*')!=0||strcmp(simb,',')!=0){
 			printf("Ulangi input simbol, simbol salah\n");
 			printf("Pilih Simbol (!,@,#,$,%,^,&,*,(,)): ");
 			scanf("%c",&simb);
@@ -227,7 +227,7 @@ void RoutingManual(){
 
 		printf("Kordinat %d: ",k);
 		scanf("%s",&koord);
-		while ((koord!='q'||koord!='Q')&&(koord!='n'||koord!='N')){
+		while ((strcmp(koord,'q')!=0||strcmp(koord,'Q')!=0)&&(strcmp(koord,'n')!=0||strcmp(koord,'N')!=0)){
 			token = strtok(koord,","); x=atoi(token); 
 			token = strtok(NULL,"\n"); y=atoi(token);
 			route[s][k][0] = simb;
@@ -235,26 +235,26 @@ void RoutingManual(){
 			route[s][k][2] = tempy; route[s][k][4] = y;
 			
 			if (Hitungjarak(x-tempx,y-tempy)<=2) {
-				strcpy(varRouting.simbol[x][y], simb);
+				strcpy(varRouting.simbol[x][y], &simb);
 			}else{
 				if (x==tempx){
 					if (tempy<=y) {
 						for (j=tempy+1;j<=y; j++){
-							strcpy(varRouting.simbol[x][j], simb);							
+							strcpy(varRouting.simbol[x][j], &simb);							
 						}
 					} else if (y<tempy){
 						for (j=y+1;j<=tempy;j++){
-							strcpy(varRouting.simbol[x][j], simb);
+							strcpy(varRouting.simbol[x][j], &simb);
 						}
 					}
 				} else if (y==tempy){
 					if (tempx<=x) {
 						for (i=tempx+1;i<=x; i++){
-							strcpy(varRouting.simbol[i][y], simb);
+							strcpy(varRouting.simbol[i][y], &simb);
 						}
 					} else if (x<tempx){
 						for (i=x+1;i<=tempx;i++){
-							strcpy(varRouting.simbol[i][y], simb);	
+							strcpy(varRouting.simbol[i][y], &simb);	
 						}
 					}
 				}
@@ -268,7 +268,7 @@ void RoutingManual(){
 		}
 		s++;
 
-	} while (koord=='n'||koord=='N');
+	} while (strcmp(koord,'n')==0||strcmp(koord,'N')==0);
 
 	MenuUtama();	
 }
@@ -302,7 +302,7 @@ typedef struct komponen {
 } component;
 
 component part[3][5];
-
+/*
 void designRuleChecker(component part[3][5]){
 		
 		int r = 1, c = 3; 
@@ -444,13 +444,15 @@ void designRuleChecker(component part[3][5]){
 }
 }
 }
-		
+
+*/
 								
 
 
 // Prosedur menyimpan kembali variabel ke dalam file eksternalnya
 // Jangan lupa buka file untuk di-write lalu tutup file-nya
 void SaveProject(){
+	int i,j;
 	fileLayout = fopen(filenameLayout, "w");
 	fileRouting = fopen(filenameRouting, "w");
 
@@ -458,8 +460,8 @@ void SaveProject(){
 	fprintf (fileLayout, "%d,%d\n", varLayout.colNeff, varLayout.rowNeff);
 	fprintf (fileRouting, "%d,%d\n", varRouting.colNeff, varRouting.rowNeff);
 	
-	for (int i=0; i<varLayout.rowNeff; i++) {
-		for (int j=0; j<varLayout.colNeff-1; j++) {
+	for (i=0; i<varLayout.rowNeff; i++) {
+		for (j=0; j<varLayout.colNeff-1; j++) {
 			fprintf (fileLayout, "%s,", varLayout.simbol[i][j]);
 			fprintf (fileRouting, "%s,", varRouting.simbol[i][j]);
 		}

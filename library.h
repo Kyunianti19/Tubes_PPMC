@@ -89,5 +89,5 @@ void DesignRuleChecker();
 // Jangan lupa buka file untuk di-write lalu tutup file-nya
 void SaveProject();
 
-//Fungsi menghitung jarak, mengembalikan jarak dalam kordinat polar
+//Fungsi menghitung jarak, mengembalikan jumlah kuadrat jarak dalam kordinat polar
 int Hitungjarak(int x, int y);
