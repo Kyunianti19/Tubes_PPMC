@@ -411,7 +411,6 @@ TampilkanLayout();
                     count++;
                 } else {
                 printf(" ");}*/
-*/
 	
 };
 
