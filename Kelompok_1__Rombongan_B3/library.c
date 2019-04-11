@@ -25,30 +25,6 @@
 
 #include "library.h"
 
-// Prosedur ....
-typedef struct koordinat {
-	int kaki[2];
-	
-} coordinate;
-
-typedef struct transistor {
-	coordinate B;
-	coordinate E;
-	coordinate C;
-}BJT;
-BJT T;
-
-typedef struct routing {
-	coordinate lokasi[2];
-}routingCoordinate;
-
-
-typedef struct komponen {
-    routingCoordinate point[40];
-} component;
-
-component part[3][5];
-
 /* -----IMPLEMENTASI FUNGSI----- */
 // Prosedur untuk membuat proyek baru, meminta input nama proyek dan ukuran PCB
 void NewProject() {
@@ -214,7 +190,7 @@ void MenuUtama() {
 			//Melakukan routing otomatis
 		} else if (inputMode == 7) {
 			//Melakukan design rule checker
-			designRuleChecker(part);
+			//designRuleChecker(part);
 		} else if (inputMode == 8) {
 			//Simpan proyek
 			SaveProject();
@@ -517,7 +493,7 @@ void LayoutOtomatis();
 void RoutingOtomatis();
 
 // Prosedur ....
-typedef struct koordinat {
+typedef struct coordinat {
 	int kaki[2];
 	
 } coordinate;
@@ -541,173 +517,173 @@ typedef struct komponen {
 component part[3][5];
 
 
-void designRuleChecker(component part[3][5]){
-		
-		int r = 1, c = 1; 
-		char **arr = malloc(sizeof(char*)*r); 
-		char baca[150];	  
-		FILE *drc;
-		drc = fopen("DRC.txt","r");
-		fgets(baca,150,drc);
-		int q =1;
-		
-		while(!feof(drc)) {
-			
-			puts(baca);
-			for (int i=0;i<strlen(baca);i++){
-				 if(baca[i] !=' '){
-					 arr[c-1] = malloc(sizeof(char)*q);
-					 arr[c-1][i] = baca[i];					
-				 }
-				 printf("%c\n",arr[c-1][i]);
-				 q++;
-				 arr[c-1] = realloc(arr[c-1],sizeof(char*)*q);
-			 }
-			 
-			 r++;
-			 c++;
-			 arr = realloc(arr, sizeof(char*)*r);
-			 fgets(baca,150,drc);
-			
-		}
-		fclose(drc);
-							 
-		
-	
-		char cekT ={' '};
-		int max = 7;		
-		int designcek = 0;
-		int cekkoordinat = 0;
-		for (int i = 1; i<=3;i++){
-			for (int j =1;j<=5;j++){
-				for (int k = 1;k<=max;k++){
-					for (int l = 1;l<=2;l++){
-						for (int m = 1;m<=2;m++){
-							if (part[i-1][j].point[k-1].lokasi[l-1].kaki[m] == part[i][j].point[k].lokasi[l].kaki[m]){
-								cekkoordinat++;
-								if(part[i][j].point[k].lokasi[l].kaki[m] == T.B.kaki[m] ){
-									cekT = 'B';
-								}
-								else if (part[i][j].point[k].lokasi[l].kaki[m] == T.E.kaki[m] ){
-									cekT = 'E';
-								}
-								else if (part[i][j].point[k].lokasi[l].kaki[m] == T.C.kaki[m] ){
-									cekT = 'C';						
-								}
-							}
-							if (cekkoordinat ==2){							  
-								for (int n = 1;n<=max;n++){
-									if (arr[n][4] == arr[n-1][4] || arr[n][3] == arr[n-1][3]) {
-										if (arr[n][0] == 'C' && arr[n][1] == 'b' && i ==1 && j==1 && cekT =='B'){
-											designcek++;
-										}
-										else if (arr[n][0] == 'C' && arr[n][1] == 'c' && i ==1 && j==2 && cekT =='C'){
-											designcek++;
-										}
-										else if (arr[n][0] == 'C' && arr[n][1] == 'e' && i ==1 && j==3 && cekT =='E'){
-											designcek++;
-										}
-										else if (arr[n][0] == 'R' && arr[n][1] == '1' && i ==2 && j==1 && cekT =='B'){
-											designcek++;
-										}
-										else if (arr[n][0] == 'R' && arr[n][1] == '2' && i ==2 && j==2 && cekT =='B'){
-											designcek++;
-										}
-										else if (arr[n][0] == 'R' && arr[n][1] == 'c' &&i ==2 && j==3 && cekT =='C'){
-											designcek++;
-										}
-										else if (arr[n][0] == 'R' && arr[n][1] == 'e' &&i ==2 && j==4 && cekT =='E'){
-											designcek++;
-										}
-										else if (arr[n][0] == 'J' && arr[n][1] == '1' && i ==3 && j==1){
-											designcek++;
-										}
-										else if (arr[n][0] == 'J' && arr[n][1] == '2' && i ==3 && j==2 && cekT =='C'){
-											designcek++;
-										}
-										else {
-											if( i ==1){
-												if (j==1){
-													printf("ERROR! Kaki %c terhubung dengan Kaki %s \n",arr[n][0],"Cb");
-												}
-												else if (j==2){
-													printf("ERROR! Kaki %c terhubung dengan Kaki %s \n",arr[n][0],"Cc");
-												}
-												else if (j==3){
-													printf("ERROR! Kaki %c terhubung dengan Kaki %s \n",arr[n][0],"Ce");
-												}
-											else if(i==2){
-												if (j==1){
-													printf("ERROR! Kaki %c terhubung dengan Kaki %s \n",arr[n][0],"R1");
-												}
-												else if (j==2){
-													printf("ERROR! Kaki %c terhubung dengan Kaki %s \n",arr[n][0],"R2");
-												}
-												else if (j==3){
-													printf("ERROR! Kaki %c terhubung dengan Kaki %s \n",arr[n][0],"Rc");
-												}
-												else if (j==4){
-													printf("ERROR! Kaki %c terhubung dengan Kaki %s \n",arr[n][0],"Re");
-												}
-											else if(i==3){
-												if (j==1){
-													printf("ERROR! Kaki %c terhubung dengan Kaki %s \n",arr[n][0],"Ji");
-												}
-												else if (j==2){
-													printf("ERROR! Kaki %c terhubung dengan Kaki %s \n",arr[n][0],"Jo");
-												}
-												
-											}
-										}
-									}
-								}
-							}
-						
-					
-				
-			else {
-				if( i ==1){
-					if (j==1){
-						printf("ERROR! Kaki %c tidak terhubung dengan Kaki %s \n",arr[j][0],"Cb");
-						}
-					else if (j==2){
-						printf("ERROR! Kaki %c tidak terhubung dengan Kaki %s \n",arr[j][0],"Cc");
-						}
-					else if (j==3){
-						printf("ERROR! Kaki %c tidak terhubung dengan Kaki %s \n",arr[j][0],"Ce");
-						}
-					}
-				else if(i==2){
-					if (j==1){
-						printf("ERROR! Kaki %c tidak terhubung dengan Kaki %s \n",arr[j][0],"R1");
-						}
-					else if (j==2){
-						printf("ERROR! Kaki %c tidak terhubung dengan Kaki %s \n",arr[j][0],"R2");
-						}
-					else if (j==3){
-						printf("ERROR! Kaki %c tidak terhubung dengan Kaki %s \n",arr[j][0],"Rc");
-						}
-					else if (j==4){
-						printf("ERROR! Kaki %c tidak terhubung dengan Kaki %s \n",arr[j][0],"Re");
-					}
-					}
-				else if(i==3){
-					if (j==1){
-						printf("ERROR! Kaki %c tidak terhubung dengan Kaki %s \n",arr[j][0],"Ji");
-						}
-					else if (j==2){
-						printf("ERROR! Kaki %c tidak terhubung dengan Kaki %s \n",arr[j][0],"Jo");
-					}
-					}
-					}
-				}
-			}
-			}
-		}
-	}
-}
-}
-}
+//void designRuleChecker(component part[3][5]){
+//		
+//		int r = 1, c = 1; 
+//		char **arr = malloc(sizeof(char*)*r); 
+//		char baca[150];	  
+//		FILE *drc;
+//		drc = fopen("DRC.txt","r");
+//		fgets(baca,150,drc);
+//		int q =1;
+//		
+//		while(!feof(drc)) {
+//			
+//			puts(baca);
+//			for (int i=0;i<strlen(baca);i++){
+//				 if(baca[i] !=' '){
+//					 arr[c-1] = malloc(sizeof(char)*q);
+//					 arr[c-1][i] = baca[i];					
+//				 }
+//				 printf("%c\n",arr[c-1][i]);
+//				 q++;
+//				 arr[c-1] = realloc(arr[c-1],sizeof(char*)*q);
+//			 }
+//			 
+//			 r++;
+//			 c++;
+//			 arr = realloc(arr, sizeof(char*)*r);
+//			 fgets(baca,150,drc);
+//			
+//		}
+//		fclose(drc);
+//							 
+//		
+//	
+//		char cekT ={' '};
+//		int max = 7;		
+//		int designcek = 0;
+//		int cekkoordinat = 0;
+//		for (int i = 1; i<=3;i++){
+//			for (int j =1;j<=5;j++){
+//				for (int k = 1;k<=max;k++){
+//					for (int l = 1;l<=2;l++){
+//						for (int m = 1;m<=2;m++){
+//							if (part[i-1][j].point[k-1].lokasi[l-1].kaki[m] == part[i][j].point[k].lokasi[l].kaki[m]){
+//								cekkoordinat++;
+//								if(part[i][j].point[k].lokasi[l].kaki[m] == T.B.kaki[m] ){
+//									cekT = 'B';
+//								}
+//								else if (part[i][j].point[k].lokasi[l].kaki[m] == T.E.kaki[m] ){
+//									cekT = 'E';
+//								}
+//								else if (part[i][j].point[k].lokasi[l].kaki[m] == T.C.kaki[m] ){
+//									cekT = 'C';						
+//								}
+//							}
+//							if (cekkoordinat ==2){							  
+//								for (int n = 1;n<=max;n++){
+//									if (arr[n][4] == arr[n-1][4] || arr[n][3] == arr[n-1][3]) {
+//										if (arr[n][0] == 'C' && arr[n][1] == 'b' && i ==1 && j==1 && cekT =='B'){
+//											designcek++;
+//										}
+//										else if (arr[n][0] == 'C' && arr[n][1] == 'c' && i ==1 && j==2 && cekT =='C'){
+//											designcek++;
+//										}
+//										else if (arr[n][0] == 'C' && arr[n][1] == 'e' && i ==1 && j==3 && cekT =='E'){
+//											designcek++;
+//										}
+//										else if (arr[n][0] == 'R' && arr[n][1] == '1' && i ==2 && j==1 && cekT =='B'){
+//											designcek++;
+//										}
+//										else if (arr[n][0] == 'R' && arr[n][1] == '2' && i ==2 && j==2 && cekT =='B'){
+//											designcek++;
+//										}
+//										else if (arr[n][0] == 'R' && arr[n][1] == 'c' &&i ==2 && j==3 && cekT =='C'){
+//											designcek++;
+//										}
+//										else if (arr[n][0] == 'R' && arr[n][1] == 'e' &&i ==2 && j==4 && cekT =='E'){
+//											designcek++;
+//										}
+//										else if (arr[n][0] == 'J' && arr[n][1] == '1' && i ==3 && j==1){
+//											designcek++;
+//										}
+//										else if (arr[n][0] == 'J' && arr[n][1] == '2' && i ==3 && j==2 && cekT =='C'){
+//											designcek++;
+//										}
+//										else {
+//											if( i ==1){
+//												if (j==1){
+//													printf("ERROR! Kaki %c terhubung dengan Kaki %s \n",arr[n][0],"Cb");
+//												}
+//												else if (j==2){
+//													printf("ERROR! Kaki %c terhubung dengan Kaki %s \n",arr[n][0],"Cc");
+//												}
+//												else if (j==3){
+//													printf("ERROR! Kaki %c terhubung dengan Kaki %s \n",arr[n][0],"Ce");
+//												}
+//											else if(i==2){
+//												if (j==1){
+//													printf("ERROR! Kaki %c terhubung dengan Kaki %s \n",arr[n][0],"R1");
+//												}
+//												else if (j==2){
+//													printf("ERROR! Kaki %c terhubung dengan Kaki %s \n",arr[n][0],"R2");
+//												}
+//												else if (j==3){
+//													printf("ERROR! Kaki %c terhubung dengan Kaki %s \n",arr[n][0],"Rc");
+//												}
+//												else if (j==4){
+//													printf("ERROR! Kaki %c terhubung dengan Kaki %s \n",arr[n][0],"Re");
+//												}
+//											else if(i==3){
+//												if (j==1){
+//													printf("ERROR! Kaki %c terhubung dengan Kaki %s \n",arr[n][0],"Ji");
+//												}
+//												else if (j==2){
+//													printf("ERROR! Kaki %c terhubung dengan Kaki %s \n",arr[n][0],"Jo");
+//												}
+//												
+//											}
+//										}
+//									}
+//								}
+//							}
+//						
+//					
+//				
+//			else {
+//				if( i ==1){
+//					if (j==1){
+//						printf("ERROR! Kaki %c tidak terhubung dengan Kaki %s \n",arr[j][0],"Cb");
+//						}
+//					else if (j==2){
+//						printf("ERROR! Kaki %c tidak terhubung dengan Kaki %s \n",arr[j][0],"Cc");
+//						}
+//					else if (j==3){
+//						printf("ERROR! Kaki %c tidak terhubung dengan Kaki %s \n",arr[j][0],"Ce");
+//						}
+//					}
+//				else if(i==2){
+//					if (j==1){
+//						printf("ERROR! Kaki %c tidak terhubung dengan Kaki %s \n",arr[j][0],"R1");
+//						}
+//					else if (j==2){
+//						printf("ERROR! Kaki %c tidak terhubung dengan Kaki %s \n",arr[j][0],"R2");
+//						}
+//					else if (j==3){
+//						printf("ERROR! Kaki %c tidak terhubung dengan Kaki %s \n",arr[j][0],"Rc");
+//						}
+//					else if (j==4){
+//						printf("ERROR! Kaki %c tidak terhubung dengan Kaki %s \n",arr[j][0],"Re");
+//					}
+//					}
+//				else if(i==3){
+//					if (j==1){
+//						printf("ERROR! Kaki %c tidak terhubung dengan Kaki %s \n",arr[j][0],"Ji");
+//						}
+//					else if (j==2){
+//						printf("ERROR! Kaki %c tidak terhubung dengan Kaki %s \n",arr[j][0],"Jo");
+//					}
+//					}
+//					}
+//				}
+//			}
+//			}
+//		}
+//	}
+//}
+//}
+//}
 		
 								
 
